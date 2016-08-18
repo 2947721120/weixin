@@ -40,18 +40,12 @@
     </settings>
 
     <typeAliases>
-        <typeAlias alias="user" type="com.yihou.model.User"/><!-- 用户实体 -->
-        <typeAlias alias="role" type="com.yihou.model.Role"/><!-- 角色实体 -->
-        <typeAlias alias="resource" type="com.yihou.model.Resource"/><!-- 资源实体 -->
-        <typeAlias alias="userOnline" type="com.yihou.model.UserOnline"/><!-- 在线用户实体 -->
     </typeAliases>
 
     <!-- 插件配置 -->
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageHelper">
-            <property name="dialect" value="mysql"/>
         </plugin>
-        <plugin interceptor="com.yihou.common.PagePlugin"/>
     </plugins>
 
 </configuration>

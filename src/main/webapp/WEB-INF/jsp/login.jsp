@@ -17,7 +17,7 @@
     </div><!-- /header -->
 
     <div role="main" class="ui-content">
-        <form action="index.html" method="post">
+        <form method="post">
 
             <h2>登录验证</h2>
 
@@ -27,13 +27,50 @@
             <label for="password">密　码:</label>
             <input type="password" name="password" id="password" value="" placeholder="登录密码" data-clear-btn="true" autocomplete="off">
 
-            <button type="submit" class="ui-btn ui-btn-b ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all">登录</button>
+            <button type="button" class="ui-btn ui-btn-b ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all" onclick="login();">登录</button>
         </form>
     </div><!-- /content -->
-
+    <div data-role="popup" id="popupArrow" data-arrow="true">
+        <p id="errorMsg"></p>
+    </div>
 </div><!-- /page -->
 
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.mobile-1.4.5.min.js"></script>
+<script>
+    function login() {
+        var userName = $("#name").val();
+        var userPwd = $("#password").val();
+        if (!userName) {
+            $("#errorMsg").text("用户名不能为空！");
+            $("#popupArrow").popup("open");
+            return;
+        }
+        if (!userPwd) {
+            $("#errorMsg").text("用户密码不能为空！");
+            $("#popupArrow").popup("open");
+            return;
+        }
+        var params = {
+            userName: userName,
+            userPwd: userPwd
+        }
+        $.ajax({
+            type: "post",
+            url: "${pageContext.request.contextPath}/userLogin",
+            dataType: "JSON",
+            data: params,
+            success: function (data) {
+                if (data) {
+                    $.mobile.changePage("${pageContext.request.contextPath}/");
+                } else {
+                    $("#errorMsg").text("用户名/密码不正确！");
+                    $("#popupArrow").popup("open");
+                    return;
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>
