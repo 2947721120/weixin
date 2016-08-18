@@ -1,0 +1,83 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>微信端信息查询</title>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/img/favicon.ico">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/css/themes/default/jquery.mobile-1.4.5.min.css">
+</head>
+<body>
+<div data-role="page">
+
+    <div data-role="header" data-position="fixed">
+        <h1>胚布入库查询</h1>
+        <a href="#nav-panel" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+        <div data-role="collapsibleset" data-theme="a" data-content-theme="a" data-collapsed-icon="carat-l" data-expanded-icon="carat-d" data-iconpos="right">
+            <div data-role="collapsible">
+                <h3>查询条件</h3>
+                <form method="post">
+                    <fieldset>
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <label for="beginDate">开始日期</label>
+                                <input type="date" name="date" id="beginDate" value="">
+                            </div>
+                            <div class="ui-block-b">
+                                <label for="endDate">结束日期</label>
+                                <input type="date" name="date" id="endDate" value="">
+                            </div>
+                        </div>
+                        <button type="submit" class="ui-btn ui-btn-b ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all">查询</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <ul data-role="listview" data-inset="true">
+            <li data-role="list-divider">E16060001<span class="ui-li-count">入库匹数：12</span></li>
+            <li><a href="index.html">
+                <h2>Stephen Weber</h2>
+                <p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
+                <p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+                <p class="ui-li-aside"><strong>6:24</strong>PM</p>
+            </a></li>
+            <li><a href="index.html">
+                <h2>jQuery Team</h2>
+                <p><strong>Boston Conference Planning</strong></p>
+                <p>In preparation for the upcoming conference in Boston, we need to start gathering a list of sponsors and speakers.</p>
+                <p class="ui-li-aside"><strong>9:18</strong>AM</p>
+            </a></li>
+            <li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-li-count">1</span></li>
+            <li><a href="index.html">
+                <h2>Avery Walker</h2>
+                <p><strong>Re: Dinner Tonight</strong></p>
+                <p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait!</p>
+                <p class="ui-li-aside"><strong>4:48</strong>PM</p>
+            </a></li>
+        </ul>
+    </div><!-- /content -->
+
+    <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
+
+        <div data-role="collapsibleset" data-theme="b" data-content-theme="b" data-collapsed-icon="carat-l" data-expanded-icon="carat-d" data-iconpos="right">
+            <div data-role="collapsible">
+                <h3>库存类</h3>
+                <ul data-role="listview">
+                    <li><a href="#" data-rel="close">胚布入库查询</a></li>
+                    <li><a href="#">胚布出库查询</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div><!-- /panel -->
+
+</div><!-- /page -->
+
+<script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.mobile-1.4.5.min.js"></script>
+</body>
+</html>
