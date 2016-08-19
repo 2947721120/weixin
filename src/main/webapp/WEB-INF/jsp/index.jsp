@@ -37,7 +37,7 @@
                 </form>
             </div>
         </div>
-        <ul data-role="listview" data-inset="true">
+        <ul data-role="listview" data-inset="true" id = "asmInHeadResult">
             <li data-role="list-divider">E16060001<span class="ui-li-count">入库匹数：12</span></li>
             <li><a href="index.html">
                 <h2>Stephen Weber</h2>
@@ -80,9 +80,36 @@
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.mobile-1.4.5.min.js"></script>
 <script>
+    var page = 1;
+    var rows = 10;
+    var order = "a.AsmDT desc";
     $(function () {
-
+        findAsmInHeadData();
     });
+    function findAsmInHeadData() {
+        var params = {
+            "page" : page,
+            "rows" : rows,
+            "order" : order
+        };
+        if ($("#beginDate").val() != '') {
+            params.beginDate = $("#beginDate").val();
+        }
+        if ($("#endDate").val() != '') {
+            params.beginDate = $("#endDate").val();
+        }
+        $.ajax({
+            type: "post",
+            url: "${pageContext.request.contextPath}/asmIn/findAsmInHead",
+            dataType: "JSON",
+            data: params,
+            success: function (data) {
+                if(data && data.size > 0) {
+
+                }
+            }
+        });
+    }
 </script>
 </body>
 </html>
