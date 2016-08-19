@@ -32,13 +32,13 @@
                                 <input type="date" name="date" id="endDate" value="">
                             </div>
                         </div>
-                        <button type="submit" class="ui-btn ui-btn-b ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all">查询</button>
+                        <button type="submit" class="ui-btn ui-btn-b ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all" onclick="findAsmInHeadData();">查询</button>
                     </fieldset>
                 </form>
             </div>
         </div>
-        <ul data-role="listview" data-inset="true" id = "asmInHeadResult">
-            <li data-role="list-divider">E16060001<span class="ui-li-count">入库匹数：12</span></li>
+        <ul data-role="listview" data-inset="true" id="asmInHeadResult">
+            <%--<li data-role="list-divider">E16060001<span class="ui-li-count">入库匹数：12</span></li>
             <li><a href="index.html">
                 <h2>Stephen Weber</h2>
                 <p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
@@ -57,7 +57,7 @@
                 <p><strong>Re: Dinner Tonight</strong></p>
                 <p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait!</p>
                 <p class="ui-li-aside"><strong>4:48</strong>PM</p>
-            </a></li>
+            </a></li>--%>
         </ul>
     </div><!-- /content -->
 
@@ -88,9 +88,9 @@
     });
     function findAsmInHeadData() {
         var params = {
-            "page" : page,
-            "rows" : rows,
-            "order" : order
+            "page": page,
+            "rows": rows,
+            "order": order
         };
         if ($("#beginDate").val() != '') {
             params.beginDate = $("#beginDate").val();
@@ -104,10 +104,26 @@
             dataType: "JSON",
             data: params,
             success: function (data) {
-                if(data && data.size > 0) {
-
+                if (data && data.size > 0) {
+                    //去掉更多加载
+                    appendHtml(data);
+                    //加上加载更多
+                    page += 1;
+                } else {
+                    $("#asmInHeadResult").append("<li data-role='list-divider'>数据已全部加载完成！</li>");
                 }
             }
+        });
+    }
+
+    function appendHtml(dataList) {
+        $.each(dataList, function (data) {
+            $("#asmInHeadResult").append("<li data-role='list-divider'>" + data.asmInNo + "<span class='ui-li-count'>入库匹数：12</span></li>");
+            $("#asmInHeadResult").append("<li><a href='#'><h2>客户a</h2>");
+            $("#asmInHeadResult").append("<p><strong>加强描述</strong></p>");
+            $("#asmInHeadResult").append("<p>小写描叙</p>");
+            $("#asmInHeadResult").append("<p class='ui-li-aside'><strong>6:24</strong>PM</p>");
+            $("#asmInHeadResult").append("</a></li>");
         });
     }
 </script>
