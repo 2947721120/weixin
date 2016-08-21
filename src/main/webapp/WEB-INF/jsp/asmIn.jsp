@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/css/themes/default/jquery.mobile-1.4.5.min.css">
 </head>
 <body>
+
 <div data-role="page" id="index">
 
-    <div data-role="header" data-position="fixed">
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>胚布入库查询</h1>
         <a href="${pageContext.request.contextPath}/" target="_top" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
     </div><!-- /header -->
@@ -56,31 +57,6 @@
     </div><!-- /panel -->--%>
 
 </div><!-- /page -->
-
-<div data-role="page" id="asmOut">
-
-    <div data-role="header" data-position="fixed">
-        <h1>胚布出库库查询</h1>
-        <a href="#nav-pane2" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
-    </div><!-- /header -->
-
-    <div role="main" class="ui-content">
-
-    </div><!-- /content -->
-
-    <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-pane2">
-        <div data-role="collapsibleset" data-theme="b" data-content-theme="b" data-collapsed-icon="carat-l" data-expanded-icon="carat-d" data-iconpos="right">
-            <div data-role="collapsible">
-                <h3>库存类</h3>
-                <ul data-role="listview">
-                    <li><a href="#index" data-rel="close">胚布入库查询</a></li>
-                    <li><a href="#asmOut" data-rel="close">胚布出库查询</a></li>
-                </ul>
-            </div>
-        </div>
-    </div><!-- /panel -->
-
-</div>
 
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.mobile-1.4.5.min.js"></script>
