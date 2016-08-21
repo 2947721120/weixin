@@ -10,26 +10,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class IndexController {
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/")
-    public String index() {
-        return "/index";
-    }
-
-    @RequestMapping("/login")
-    public String login() {
-        return "/login";
-    }
-
     @RequestMapping("/userLogin")
     @ResponseBody
-    public Boolean userLogin(String userName,String userPwd) {
+    public Boolean userLogin(String userName, String userPwd) {
         Map<String, Object> params = new HashMap<>();
-        params.put("userName",userName);
+        params.put("userName", userName);
         params.put("userPwd", userPwd);
         return userService.userLogin(params);
     }

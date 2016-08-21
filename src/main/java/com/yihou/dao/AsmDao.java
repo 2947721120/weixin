@@ -6,8 +6,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import java.util.Map;
 
-public interface AsmInDao {
+public interface AsmDao {
 
     List<Map<String, Object>> findAsmInHead(@Param("params") Map<String, Object> params, @Param("sqlPage") SqlPage sqlPage);
+
+    List<Map<String, Object>> findAsmOutHead(@Param("params") Map<String, Object> params, @Param("sqlPage") SqlPage sqlPage);
 
 }

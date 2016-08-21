@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yihou.dao.AsmDao">
+    <!-- 查询胚布入库主表信息 -->
+    <select id="findAsmInHead" resultType="hashmap">
+        select a.*,b.ParComNameC
+        from AsmInHead a left join Custom b on a.Customcode = b.ParComID
+        <where>
+            <if test="params.beginDate != null">
+                a.AsmDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.AsmDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询胚布出库库主表信息 -->
+    <select id="findAsmOutHead" resultType="hashmap">
+        select a.* from AsmOutHead a
+        <where>
+            <if test="params.beginDate != null">
+                a.AsmDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.AsmDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+        </where>
+    </select>
+</mapper>
