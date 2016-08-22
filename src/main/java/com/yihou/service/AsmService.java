@@ -22,5 +22,8 @@ public class AsmService {
         return asmDao.findAsmOutHead(params, sqlPage);
     }
 
+    public List<Map<String, Object>> findAsmInDetail(Map<String, Object> params) {
+        return asmDao.findAsmInDetail(params);
+    }
 
 }

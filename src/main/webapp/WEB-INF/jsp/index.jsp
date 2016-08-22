@@ -62,9 +62,6 @@
         $("[data-role='navbar']").navbar();
         $("[data-role='header'], [data-role='footer']").toolbar();
     });
-    function gotoUrl(url) {
-        window.location = url;
-    }
 </script>
 </body>
 </html>

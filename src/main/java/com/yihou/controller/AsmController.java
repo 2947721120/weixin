@@ -35,10 +35,11 @@ public class AsmController {
 
     @RequestMapping("/findAsmInHead")
     @ResponseBody
-    public String findAsmInHead(Date beginDate, Date endDate,int page,int rows,String order) {
+    public String findAsmInHead(Date beginDate, Date endDate,String customerName,int page,int rows,String order) {
         Map<String, Object> params = new HashMap<String,Object>();
         params.put("beginDate", beginDate);
         params.put("endDate", endDate);
+        params.put("customerName", customerName);
         SqlPage sqlPage = new SqlPage();
         sqlPage.setPage(page);
         sqlPage.setRows(rows);

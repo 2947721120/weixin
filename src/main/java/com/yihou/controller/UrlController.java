@@ -1,16 +1,21 @@
 package com.yihou.controller;
 
-import com.yihou.service.UserService;
+import com.yihou.service.AsmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class UrlController {
+
+    @Autowired
+    private AsmService asmService;
 
     /**
      * 系统主页
@@ -45,4 +50,18 @@ public class UrlController {
     public String asmOut() {
         return "/asmOut";
     }
+
+    @RequestMapping("/asmInDetail/{asmNo}")
+    public String asmInDetail(@PathVariable("asmNo") String asmNo, ModelMap model){
+        model.addAttribute("asmNo", asmNo);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("asmNo", asmNo);
+        List<Map<String, Object>> mapList = asmService.findAsmInDetail(params);
+        if (mapList != null && !mapList.isEmpty()) {
+            model.addAttribute("head", mapList.get(0));
+            model.addAttribute("detail", mapList);
+        }
+        return "/asmInDetail";
+    }
+
 }

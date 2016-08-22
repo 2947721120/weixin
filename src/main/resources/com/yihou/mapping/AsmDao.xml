@@ -3,11 +3,14 @@
 <mapper namespace="com.yihou.dao.AsmDao">
     <!-- 查询胚布入库主表信息 -->
     <select id="findAsmInHead" resultType="hashmap">
-        select a.*,b.ParComNameC
+        select a.*,b.ParComNameC,b.ParSingleName
         from AsmInHead a left join Custom b on a.Customcode = b.ParComID
         <where>
+            <if test="params.customerName != null">
+                b.ParSingleName LIKE "%${params.customerName}%"
+            </if>
             <if test="params.beginDate != null">
-                a.AsmDT <![CDATA[>=]]> #{params.beginDate}
+                AND a.AsmDT <![CDATA[>=]]> #{params.beginDate}
             </if>
             <if test="params.endDate != null">
                 AND a.AsmDT <![CDATA[<=]]> #{params.endDate}
@@ -26,5 +29,20 @@
                 AND a.AsmDT <![CDATA[<=]]> #{params.endDate}
             </if>
         </where>
+    </select>
+
+    <!-- 查询胚布入库明细信息 -->
+    <select id="findAsmInDetail" resultType="hashmap">
+      SELECT
+        a.AsmNO,a.Customcode,a.AsmDT,a.Widesize,a.FndHeight,a.PinCount,a.InchCount,a.TotalPin,a.ProdCode,a.ColorCode,a.ManuCrock,
+        a.ContCode,a.Pieces TotalPieces,a.Weights TotalWeights,
+        b.PieceNO,b.Storecode,b.SpaceCode,b.Pieces,b.Quan,b.Unitone,b.PieceLen,
+        c.ParComNameC,c.ParSingleName
+      FROM AsmInHead a
+      LEFT JOIN AsmInDetail b ON a.AsmNO = b.AsmNO
+      LEFT JOIN Custom c ON a.Customcode = c.ParComID
+      <where>
+          a.AsmNO = #{params.asmNo}
+      </where>
     </select>
 </mapper>

@@ -20,7 +20,7 @@
 
     <div role="main" class="ui-content">
         <div data-role="collapsibleset" data-theme="a" data-content-theme="a" data-collapsed-icon="carat-l" data-expanded-icon="carat-d" data-iconpos="right">
-            <div data-role="collapsible">
+            <div data-role="collapsible" data-collapsed="false">
                 <h3>查询条件</h3>
                 <form method="post">
                     <fieldset>
@@ -33,6 +33,10 @@
                                 <label for="endDate">结束日期</label>
                                 <input type="date" name="date" id="endDate" value="">
                             </div>
+                        </div>
+                        <div class="ui-grid-a">
+                            <label for="customerName">客户简称</label>
+                            <input type="text" name="customerName" id="customerName" value="">
                         </div>
                         <button type="button" class="ui-btn ui-btn-b ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all" onclick="buttonData();">查询</button>
                     </fieldset>
@@ -61,6 +65,7 @@
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.mobile-1.4.5.min.js"></script>
 <script>
+    var contextPath = "${pageContext.request.contextPath}";
     var defaultPage = 1;
     var defaultRows = 10;
     var order = "a.AsmDT desc";
@@ -89,6 +94,9 @@
         if ($("#endDate").val() != '') {
             params.endDate = $("#endDate").val();
         }
+        if ($("#customerName").val() != '') {
+            params.customerName = $("#customerName").val();
+        }
         $.ajax({
             type: "post",
             url: "${pageContext.request.contextPath}/asm/findAsmInHead",
@@ -105,7 +113,7 @@
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
                 appendHtml += "<li data-role='list-divider'>" + value.AsmNO + "<span class='ui-li-count'>入库匹数：" + value.Pieces + "</span></li>";
-                appendHtml += "<li><a href='#'><h2>" + value.ParComNameC + "</h2>";
+                appendHtml += "<li><a href='" + contextPath + "/asmInDetail/" + value.AsmNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
                 appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
                 appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
                 appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.AsmDT + "</strong></p>";
