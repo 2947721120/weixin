@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>胚布入库明细</title>
+    <title>胚布出库明细</title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/img/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/css/themes/default/jquery.mobile-1.4.5.min.css">
 </head>
@@ -16,9 +16,9 @@
 <div data-role="page" id="index">
 
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>入库单：${asmNo} 详情</h1>
+        <h1>出库单：${asmNo} 详情</h1>
         <a href="${pageContext.request.contextPath}/" target="_top" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
-        <a href="${pageContext.request.contextPath}/asmIn" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-back ui-nodisc-icon ui-alt-icon ui-btn-right">返回</a>
+        <a href="${pageContext.request.contextPath}/asmOut" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-back ui-nodisc-icon ui-alt-icon ui-btn-right">返回</a>
     </div><!-- /header -->
 
     <div role="main" class="ui-content">
@@ -26,21 +26,21 @@
             <div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="ui-bar ui-bar-a">
-                        <label>入库编号：</label>
-                        <label>${head.AsmNO}</label>
+                        <label>出库编号：</label>
+                        <label>${head.AsmOutNO}</label>
                     </div>
                 </div>
                 <div class="ui-block-b">
                     <div class="ui-bar ui-bar-a">
-                        <label>客户简称：</label>
-                        <label>${head.ParSingleName}</label>
+                        <label>出库部门：</label>
+                        <label>${head.DeptCode}</label>
                     </div>
                 </div>
             </div>
             <div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="ui-bar ui-bar-a">
-                        <label>入库日期：</label>
+                        <label>出库日期：</label>
                         <label>${fn:substring(head.AsmDT, 0, 10)}</label>
                     </div>
                 </div>
@@ -82,13 +82,13 @@
             <div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="ui-bar ui-bar-a">
-                        <label>入库匹数</label>
+                        <label>出库匹数</label>
                         <label>${head.TotalPieces}</label>
                     </div>
                 </div>
                 <div class="ui-block-b">
                     <div class="ui-bar ui-bar-a">
-                        <label>入库重量</label>
+                        <label>出库重量</label>
                         <label>${head.TotalWeights}</label>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                     <c:if test="${!empty detail}">
                         <c:forEach var="item" items="${detail}" varStatus="status">
                             <tr>
-                                <th>${item.PieceNO}</th>
+                                <th>${item.PieceNo}</th>
                                 <td>${item.Pieces}</td>
                                 <td>${item.Quan}</td>
                             </tr>

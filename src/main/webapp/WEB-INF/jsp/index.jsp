@@ -27,6 +27,7 @@
             <li data-role="list-divider">仓库类查询</li>
             <li data-icon="arrow-d-l"><a href="${pageContext.request.contextPath}/asmIn" target="_top">胚布入库查询</a></li>
             <li data-icon="arrow-u-r"><a href="${pageContext.request.contextPath}/asmOut" target="_top">胚布出库查询</a></li>
+            <li data-icon="gear"><a href="#">胚布库存查询</a></li>
         </ul>
     </div><!-- /content -->
 </div><!-- /page -->

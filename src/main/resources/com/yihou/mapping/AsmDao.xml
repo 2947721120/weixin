@@ -33,16 +33,29 @@
 
     <!-- 查询胚布入库明细信息 -->
     <select id="findAsmInDetail" resultType="hashmap">
-      SELECT
+        SELECT
         a.AsmNO,a.Customcode,a.AsmDT,a.Widesize,a.FndHeight,a.PinCount,a.InchCount,a.TotalPin,a.ProdCode,a.ColorCode,a.ManuCrock,
         a.ContCode,a.Pieces TotalPieces,a.Weights TotalWeights,
         b.PieceNO,b.Storecode,b.SpaceCode,b.Pieces,b.Quan,b.Unitone,b.PieceLen,
         c.ParComNameC,c.ParSingleName
-      FROM AsmInHead a
-      LEFT JOIN AsmInDetail b ON a.AsmNO = b.AsmNO
-      LEFT JOIN Custom c ON a.Customcode = c.ParComID
-      <where>
-          a.AsmNO = #{params.asmNo}
-      </where>
+        FROM AsmInHead a
+        LEFT JOIN AsmInDetail b ON a.AsmNO = b.AsmNO
+        LEFT JOIN Custom c ON a.Customcode = c.ParComID
+        <where>
+            a.AsmNO = #{params.asmNo}
+        </where>
+    </select>
+
+    <!-- 查询胚布出库明细信息 -->
+    <select id="findAsmOutDetail" resultType="hashmap">
+        SELECT
+            a.AsmOutNO,a.ContNo,a.ManuCrock,a.DeptCode,a.AsmDT,a.ProdCode,a.ColorCode,a.Widesize,a.FndHeight,a.ProdSize,
+            a.ProdInch,a.CustOrderCode,a.TotalPin,a.Yarnbrand,a.OutStyle,a.StoreCode,a.Total TotalWeights,a.Pieces TotalPieces,
+            b.PieceNo,b.Pieces,b.Quan,b.Piecelen
+        FROM AsmOutHead a
+        LEFT JOIN AsmOutDetail b ON a.AsmOutNO = b.AsmOutNO
+        <where>
+            a.AsmOutNO = #{params.asmNo}
+        </where>
     </select>
 </mapper>

@@ -20,7 +20,7 @@
 
     <div role="main" class="ui-content">
         <div data-role="collapsibleset" data-theme="a" data-content-theme="a" data-collapsed-icon="carat-l" data-expanded-icon="carat-d" data-iconpos="right">
-            <div data-role="collapsible">
+            <div data-role="collapsible" data-collapsed="false">
                 <h3>查询条件</h3>
                 <form method="post">
                     <fieldset>
@@ -49,6 +49,7 @@
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.mobile-1.4.5.min.js"></script>
 <script>
+    var contextPath = "${pageContext.request.contextPath}";
     var defaultPage = 1;
     var defaultRows = 10;
     var order = "a.AsmDT desc";
@@ -94,7 +95,7 @@
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
                 appendHtml += "<li data-role='list-divider'>" + value.AsmOutNO + "<span class='ui-li-count'>出库匹数：" + value.Pieces + "</span></li>";
-                appendHtml += "<li><a href='#'><h2>" + value.DeptCode + "</h2>";
+                appendHtml += "<li><a href='" + contextPath + "/asmOutDetail/" + value.AsmOutNO + "'><h2>出库部门：" + value.DeptCode + "</h2>";
                 appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
                 appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
                 appendHtml += "<p class='ui-li-count'><strong>出库时间：" + value.AsmDT + "</strong></p>";

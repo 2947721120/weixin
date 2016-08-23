@@ -64,4 +64,17 @@ public class UrlController {
         return "/asmInDetail";
     }
 
+    @RequestMapping("/asmOutDetail/{asmNo}")
+    public String asmOutDetail(@PathVariable("asmNo") String asmNo, ModelMap model) {
+        model.addAttribute("asmNo", asmNo);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("asmNo", asmNo);
+        List<Map<String, Object>> mapList = asmService.findAsmOutDetail(params);
+        if (mapList != null && !mapList.isEmpty()) {
+            model.addAttribute("head", mapList.get(0));
+            model.addAttribute("detail", mapList);
+        }
+        return "/asmOutDetail";
+    }
+
 }

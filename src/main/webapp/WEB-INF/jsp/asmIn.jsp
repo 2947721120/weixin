@@ -48,18 +48,6 @@
         </ul>
     </div><!-- /content -->
 
-    <%--<div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
-        <div data-role="collapsibleset" data-theme="b" data-content-theme="b" data-collapsed-icon="carat-l" data-expanded-icon="carat-d" data-iconpos="right">
-            <div data-role="collapsible">
-                <h3>库存类</h3>
-                <ul data-role="listview">
-                    <li><a href="#index" data-rel="close">胚布入库查询</a></li>
-                    <li><a href="#asmOut" data-rel="close">胚布出库查询</a></li>
-                </ul>
-            </div>
-        </div>
-    </div><!-- /panel -->--%>
-
 </div><!-- /page -->
 
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
