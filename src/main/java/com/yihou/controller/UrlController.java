@@ -77,4 +77,9 @@ public class UrlController {
         return "/asmOutDetail";
     }
 
+    @RequestMapping("/asmSave")
+    public String asmSave() {
+        return "/asmSave";
+    }
+
 }

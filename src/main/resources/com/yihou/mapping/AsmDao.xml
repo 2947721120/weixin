@@ -37,10 +37,13 @@
         a.AsmNO,a.Customcode,a.AsmDT,a.Widesize,a.FndHeight,a.PinCount,a.InchCount,a.TotalPin,a.ProdCode,a.ColorCode,a.ManuCrock,
         a.ContCode,a.Pieces TotalPieces,a.Weights TotalWeights,
         b.PieceNO,b.Storecode,b.SpaceCode,b.Pieces,b.Quan,b.Unitone,b.PieceLen,
-        c.ParComNameC,c.ParSingleName
+        c.ParComNameC,c.ParSingleName,
+        d.ProdNameC,e.SName
         FROM AsmInHead a
         LEFT JOIN AsmInDetail b ON a.AsmNO = b.AsmNO
         LEFT JOIN Custom c ON a.Customcode = c.ParComID
+        LEFT JOIN Product d ON a.ProdCode = d.ProdCode
+        LEFT JOIN ProdColor e ON  a.ColorCode = e.SCode
         <where>
             a.AsmNO = #{params.asmNo}
         </where>
@@ -51,11 +54,46 @@
         SELECT
             a.AsmOutNO,a.ContNo,a.ManuCrock,a.DeptCode,a.AsmDT,a.ProdCode,a.ColorCode,a.Widesize,a.FndHeight,a.ProdSize,
             a.ProdInch,a.CustOrderCode,a.TotalPin,a.Yarnbrand,a.OutStyle,a.StoreCode,a.Total TotalWeights,a.Pieces TotalPieces,
-            b.PieceNo,b.Pieces,b.Quan,b.Piecelen
+            b.PieceNo,b.Pieces,b.Quan,b.Piecelen,
+            d.ProdNameC,e.SName
         FROM AsmOutHead a
         LEFT JOIN AsmOutDetail b ON a.AsmOutNO = b.AsmOutNO
+        LEFT JOIN Product d ON a.ProdCode = d.ProdCode
+        LEFT JOIN ProdColor e ON  a.ColorCode = e.SCode
         <where>
             a.AsmOutNO = #{params.asmNo}
+        </where>
+    </select>
+
+    <!-- 查询胚布库存 -->
+    <select id="findAsmSave" resultType="hashmap">
+        SELECT
+            b.*,
+            a.StockPieces,
+            a.StockQuan,
+            c.ParSingleName
+        FROM
+        (
+            SELECT
+                AsmNo,
+                SUM(StockPieces) StockPieces,
+                ROUND(SUM(StockQuan), 2) StockQuan
+                FROM
+                AsmSave
+            WHERE
+              StockQuan > 0
+            GROUP BY
+              AsmNo
+        ) a
+        LEFT JOIN AsmInHead b ON a.AsmNo = b.AsmNO
+        LEFT JOIN Custom c on b.Customcode = c.ParComID
+        <where>
+            <if test="params.beginDate != null">
+                b.AsmDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND b.AsmDT <![CDATA[<=]]> #{params.endDate}
+            </if>
         </where>
     </select>
 </mapper>

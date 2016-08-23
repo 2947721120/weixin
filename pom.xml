@@ -18,7 +18,7 @@
         <!-- mybatis整合spring版本 -->
         <mybatis.spring.version>1.2.3</mybatis.spring.version>
         <!-- mybatis真分页插件版本 -->
-        <mybatis.pagehelper.version>4.1.0</mybatis.pagehelper.version>
+        <mybatis.pagehelper.version>4.1.6</mybatis.pagehelper.version>
         <!-- alibaba数据源版本 -->
         <druid.version>1.0.16</druid.version>
         <!-- alibaba JSON版本 -->

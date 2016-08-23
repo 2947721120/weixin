@@ -25,13 +25,10 @@ public class AsmController {
     @Autowired
     private AsmService asmService;
 
-    /*@InitBinder
+    @InitBinder
     public void initBinder(ServletRequestDataBinder binder) {
-        *//**
-         * 自动转换日期类型的字段格式
-         *//*
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
-    }*/
+    }
 
     @RequestMapping("/findAsmInHead")
     @ResponseBody
@@ -60,6 +57,21 @@ public class AsmController {
         sqlPage.setRows(rows);
         sqlPage.setOrder(order);
         List<Map<String, Object>> mapList = asmService.findAsmOutHead(params, sqlPage);
+        JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
+        return JSON.toJSONString(mapList, SerializerFeature.WriteDateUseDateFormat);
+    }
+
+    @RequestMapping("/findAsmSave")
+    @ResponseBody
+    public String findAsmSave(Date beginDate, Date endDate,int page,int rows,String order) {
+        Map<String, Object> params = new HashMap<String,Object>();
+        params.put("beginDate", beginDate);
+        params.put("endDate", endDate);
+        SqlPage sqlPage = new SqlPage();
+        sqlPage.setPage(page);
+        sqlPage.setRows(rows);
+        sqlPage.setOrder(order);
+        List<Map<String, Object>> mapList = asmService.findAsmSave(params, sqlPage);
         JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
         return JSON.toJSONString(mapList, SerializerFeature.WriteDateUseDateFormat);
     }

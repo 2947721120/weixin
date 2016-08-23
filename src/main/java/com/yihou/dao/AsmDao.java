@@ -15,4 +15,7 @@ public interface AsmDao {
     List<Map<String, Object>> findAsmInDetail(@Param("params") Map<String, Object> params);
 
     List<Map<String, Object>> findAsmOutDetail(@Param("params") Map<String, Object> params);
+
+    List<Map<String, Object>> findAsmSave(@Param("params") Map<String, Object> params, @Param("sqlPage") SqlPage sqlPage);
+
 }

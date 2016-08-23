@@ -30,4 +30,8 @@ public class AsmService {
         return asmDao.findAsmOutDetail(params);
     }
 
+    public List<Map<String, Object>> findAsmSave(Map<String, Object> params, SqlPage sqlPage) {
+        return asmDao.findAsmSave(params, sqlPage);
+    }
+
 }
