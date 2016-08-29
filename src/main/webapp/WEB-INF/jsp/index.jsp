@@ -24,10 +24,11 @@
 <div data-role="page" id="index">
     <div class="ui-content" role="main">
         <ul data-role="listview" data-theme="a" data-dividertheme="b">
-            <li data-role="list-divider">仓库类查询</li>
+            <li data-role="list-divider">胚布类查询</li>
             <li data-icon="arrow-d-l"><a href="${pageContext.request.contextPath}/asmIn" target="_top">胚布入库查询</a></li>
             <li data-icon="arrow-u-r"><a href="${pageContext.request.contextPath}/asmOut" target="_top">胚布出库查询</a></li>
             <li data-icon="gear"><a href="${pageContext.request.contextPath}/asmSave" target="_top">胚布库存查询</a></li>
+            <li data-role="list-divider">成品类查询</li>
             <li data-icon="arrow-d-l"><a href="${pageContext.request.contextPath}/productIn" target="_top">成品入库查询</a></li>
             <li data-icon="arrow-u-r"><a href="${pageContext.request.contextPath}/productOut" target="_top">成品出库查询</a></li>
             <li data-icon="gear"><a href="${pageContext.request.contextPath}/productSave" target="_top">成品库存查询</a></li>
