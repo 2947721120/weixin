@@ -56,7 +56,7 @@
     var contextPath = "${pageContext.request.contextPath}";
     var defaultPage = 1;
     var defaultRows = 10;
-    var order = "a.AsmDT desc";
+    var order = "a.FabInDT desc";
     $(function () {
         buttonData();
     });
@@ -87,7 +87,7 @@
         }
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/asm/findAsmInHead",
+            url: "${pageContext.request.contextPath}/fab/findFabInHead",
             dataType: "JSON",
             data: params,
             success: function (data) {
@@ -100,12 +100,12 @@
         $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
-                appendHtml += "<li data-role='list-divider'>" + value.AsmNO + "<span class='ui-li-count'>入库匹数：" + value.Pieces + "</span></li>";
-                appendHtml += "<li><a href='" + contextPath + "/asmInDetail/" + value.AsmNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
-                appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
+                appendHtml += "<li data-role='list-divider'>" + value.FabInNO + "<span class='ui-li-count'>入库匹数：" + value.Pieces + "</span></li>";
+                appendHtml += "<li><a href='" + contextPath + "/fabInDetail/" + value.FabInNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
+                appendHtml += "<p><strong>门幅：" + value.WideSize + "</strong></p>";
                 appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
-                appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.AsmDT + "</strong></p>";
-                appendHtml += "<p class='ui-li-aside'><strong>入库重量：" + value.Weights + "</strong></p>";
+                appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.FabInDT + "</strong></p>";
+                appendHtml += "<p class='ui-li-aside'><strong>入库重量：" + value.Quan + "</strong></p>";
                 appendHtml += "</a></li>";
             });
             if (isAppend) {

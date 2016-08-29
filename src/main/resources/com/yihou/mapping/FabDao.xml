@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yihou.dao.FabDao" >
+
+    <!-- 查询成品入库主表信息 -->
+    <select id="findFabInHead" resultType="hashmap">
+        select a.*,b.ParComNameC,b.ParSingleName
+        from FabInHead a left join Custom b on a.PartnerCode = b.ParComID
+        <where>
+            <if test="params.customerName != null">
+                b.ParSingleName LIKE "%${params.customerName}%"
+            </if>
+            <if test="params.beginDate != null">
+                AND a.FabInDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.FabInDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询成品入库明细信息 -->
+    <select id="findFabInDetail" resultType="hashmap">
+        SELECT
+        a.FabInNO,a.PartnerCode,a.FabInDT,a.WideSize,a.FndHeight,a.ProdInchCount,a.ProdCode,a.ProdColor,a.ManuCrock,
+        a.ContCode,a.Pieces TotalPieces,a.Quan TotalWeights,
+        b.PieceNO,b.Storecode,b.SpaceCode,b.Quan,b.unit,b.PieceLen,
+        c.ParComNameC,c.ParSingleName,
+        d.ProdNameC,e.SName
+        FROM FabInHead a
+        LEFT JOIN FabInDetail b ON a.FabInNO = b.FabinNo
+        LEFT JOIN Custom c ON a.PartnerCode = c.ParComID
+        LEFT JOIN Product d ON a.ProdCode = d.ProdCode
+        LEFT JOIN ProdColor e ON  a.ProdCode = e.SCode
+        <where>
+            a.FabInNO = #{params.fabInNO}
+        </where>
+        order by b.PieceNO
+    </select>
+
+    <!-- 查询成品出库库主表信息 -->
+    <select id="findFabOutHead" resultType="hashmap">
+        select a.* ,b.ParComNameC,b.ParSingleName
+        from FabOutHead a left join Custom b on a.PartnerCode = b.ParComID
+        <where>
+            <if test="params.customerName != null">
+                b.ParSingleName LIKE "%${params.customerName}%"
+            </if>
+            <if test="params.beginDate != null">
+                AND a.FabOutDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.FabOutDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询成品出库明细信息 -->
+    <select id="findFabOutDetail" resultType="hashmap">
+        SELECT
+        a.FabOutNO,a.ContCode,a.ManuCrock,a.PartnerCode,a.FabOutDT,a.ProdCode,a.ProdColor,a.Widesize,a.FndHeight,a.ProdSize,
+        a.ProdInchCount,a.Quan TotalWeights,a.Pieces TotalPieces,
+        b.PieceNo,b.Quan,b.Piecelen,
+        d.ProdNameC,e.SName,
+        f.ParComNameC,f.ParSingleName
+        FROM FabOutHead a
+        LEFT JOIN FabOutDetail b ON a.FabOutNO = b.FabOutNO
+        LEFT JOIN Product d ON a.ProdCode = d.ProdCode
+        LEFT JOIN ProdColor e ON  a.ProdColor = e.SCode
+        LEFT JOIN Custom f on a.PartnerCode = f.ParComID
+        <where>
+            a.FabOutNO = #{params.fabOutNO}
+        </where>
+        order by b.PieceNo
+    </select>
+
+    <!-- 查询成品库存 -->
+    <select id="findFabSave" resultType="hashmap">
+        SELECT
+        b.*,
+        a.StockQuan,
+        c.ParSingleName
+        FROM
+        (
+        SELECT
+        FabinNo,
+        ROUND(SUM(quan), 2) StockQuan
+        FROM
+        FabSave
+        WHERE
+        quan > 0
+        GROUP BY
+        FabinNo
+        ) a
+        LEFT JOIN FabInHead b ON a.FabinNo = b.FabinNo
+        LEFT JOIN Custom c on b.PartnerCode = c.ParComID
+        <where>
+            <if test="params.beginDate != null">
+                b.FabInDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND b.FabInDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+        </where>
+    </select>
+
+</mapper>

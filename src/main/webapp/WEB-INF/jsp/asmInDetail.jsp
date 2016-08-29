@@ -68,13 +68,13 @@
             <div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="ui-bar ui-bar-a">
-                        <label>布　　类</label>
+                        <label>布　　类：</label>
                         <label>${head.ProdNameC}</label>
                     </div>
                 </div>
                 <div class="ui-block-b">
                     <div class="ui-bar ui-bar-a">
-                        <label>色　　名</label>
+                        <label>色　　名：</label>
                         <label>${head.SName}</label>
                     </div>
                 </div>
@@ -82,13 +82,13 @@
             <div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="ui-bar ui-bar-a">
-                        <label>入库匹数</label>
+                        <label>入库匹数：</label>
                         <label>${head.TotalPieces}</label>
                     </div>
                 </div>
                 <div class="ui-block-b">
                     <div class="ui-bar ui-bar-a">
-                        <label>入库重量</label>
+                        <label>入库重量：</label>
                         <label>${head.TotalWeights}</label>
                     </div>
                 </div>

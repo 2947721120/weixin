@@ -1,6 +1,7 @@
 package com.yihou.controller;
 
 import com.yihou.service.AsmService;
+import com.yihou.service.FabService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,6 +17,9 @@ public class UrlController {
 
     @Autowired
     private AsmService asmService;
+
+    @Autowired
+    private FabService fabService;
 
     /**
      * 系统主页
@@ -82,19 +86,45 @@ public class UrlController {
         return "/asmSave";
     }
 
-    @RequestMapping("/productIn")
-    public String productIn() {
-        return "/productIn";
+    @RequestMapping("/fabIn")
+    public String fabIn() {
+        return "/fabIn";
     }
 
-    @RequestMapping("/productOut")
-    public String productOut() {
-        return "/productOut";
+    @RequestMapping("/fabInDetail/{fabInNO}")
+    public String fabInDetail(@PathVariable("fabInNO") String fabInNO, ModelMap model){
+        model.addAttribute("fabInNO", fabInNO);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("fabInNO", fabInNO);
+        List<Map<String, Object>> mapList = fabService.findFabInDetail(params);
+        if (mapList != null && !mapList.isEmpty()) {
+            model.addAttribute("head", mapList.get(0));
+            model.addAttribute("detail", mapList);
+        }
+        return "/fabInDetail";
     }
 
-    @RequestMapping("/productSave")
-    public String productSave() {
-        return "/productSave";
+    @RequestMapping("/fabOut")
+    public String fabOut() {
+        return "/fabOut";
+    }
+
+    @RequestMapping("/fabOutDetail/{fabOutNO}")
+    public String fabOutDetail(@PathVariable("fabOutNO") String fabOutNO, ModelMap model) {
+        model.addAttribute("fabOutNO", fabOutNO);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("fabOutNO", fabOutNO);
+        List<Map<String, Object>> mapList = fabService.findFabOutDetail(params);
+        if (mapList != null && !mapList.isEmpty()) {
+            model.addAttribute("head", mapList.get(0));
+            model.addAttribute("detail", mapList);
+        }
+        return "/fabOutDetail";
+    }
+
+    @RequestMapping("/fabSave")
+    public String fabSave() {
+        return "/fabSave";
     }
 
 }
