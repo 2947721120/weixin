@@ -82,4 +82,19 @@ public class UrlController {
         return "/asmSave";
     }
 
+    @RequestMapping("/productIn")
+    public String productIn() {
+        return "/productIn";
+    }
+
+    @RequestMapping("/productOut")
+    public String productOut() {
+        return "/productOut";
+    }
+
+    @RequestMapping("/productSave")
+    public String productSave() {
+        return "/productSave";
+    }
+
 }
