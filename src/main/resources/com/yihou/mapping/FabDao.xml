@@ -3,7 +3,7 @@
 <mapper namespace="com.yihou.dao.FabDao" >
 
     <!-- 查询成品入库主表信息 -->
-    <select id="findFabInHead" resultType="hashmap">
+    <select id="findFabInHead" resultType="map">
         select a.*,b.ParComNameC,b.ParSingleName
         from FabInHead a left join Custom b on a.PartnerCode = b.ParComID
         <where>
@@ -20,7 +20,7 @@
     </select>
 
     <!-- 查询成品入库明细信息 -->
-    <select id="findFabInDetail" resultType="hashmap">
+    <select id="findFabInDetail" resultType="map">
         SELECT
         a.FabInNO,a.PartnerCode,a.FabInDT,a.WideSize,a.FndHeight,a.ProdInchCount,a.ProdCode,a.ProdColor,a.ManuCrock,
         a.ContCode,a.Pieces TotalPieces,a.Quan TotalWeights,
@@ -39,7 +39,7 @@
     </select>
 
     <!-- 查询成品出库库主表信息 -->
-    <select id="findFabOutHead" resultType="hashmap">
+    <select id="findFabOutHead" resultType="map">
         select a.* ,b.ParComNameC,b.ParSingleName
         from FabOutHead a left join Custom b on a.PartnerCode = b.ParComID
         <where>
@@ -56,7 +56,7 @@
     </select>
 
     <!-- 查询成品出库明细信息 -->
-    <select id="findFabOutDetail" resultType="hashmap">
+    <select id="findFabOutDetail" resultType="map">
         SELECT
         a.FabOutNO,a.ContCode,a.ManuCrock,a.PartnerCode,a.FabOutDT,a.ProdCode,a.ProdColor,a.Widesize,a.FndHeight,a.ProdSize,
         a.ProdInchCount,a.Quan TotalWeights,a.Pieces TotalPieces,
@@ -75,7 +75,7 @@
     </select>
 
     <!-- 查询成品库存 -->
-    <select id="findFabSave" resultType="hashmap">
+    <select id="findFabSave" resultType="map">
         SELECT
         b.*,
         a.StockQuan,

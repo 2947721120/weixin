@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yihou.dao.WoDao">
+
+    <select id="findWoHead" resultType="map">
+        SELECT
+            a.ManuCrock,
+            b.ParSingleName,
+            a.CreateOrderDT,
+            a.CurrProcCode,
+            a.ProcedureCode,
+            c.NAME,
+            e.ProdNameC,
+            d.SName,
+            a.Pieces,
+            a.SubQuan
+        FROM
+            WOHead a
+        LEFT OUTER JOIN Custom b ON a.CustCode = b.ParComID
+        LEFT OUTER JOIN ManuProcess c ON a.CurrProcCode = c.CODE
+        LEFT OUTER JOIN ProdColor d ON a.ColorCode = d.SCode
+        LEFT OUTER JOIN Product e ON a.ProdCode = e.ProdCode
+        <where>
+            <if test="params.customerName != null">
+                b.ParSingleName LIKE "%${params.customerName}%"
+            </if>
+            <if test="params.beginDate != null">
+                AND a.CreateOrderDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.CreateOrderDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+            <if test="params.manuCrock != null">
+                AND a.manuCrock LIKE "%${params.manuCrock}%"
+            </if>
+        </where>
+    </select>
+
+</mapper>

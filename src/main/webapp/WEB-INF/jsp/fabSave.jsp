@@ -34,7 +34,14 @@
                                 <input type="date" name="date" id="endDate" value="">
                             </div>
                         </div>
-                        <button type="button" class="ui-btn ui-btn-b ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all" onclick="buttonData();">查询</button>
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <button type="button" class="ui-btn ui-btn-a ui-icon-back ui-btn-icon-left ui-shadow ui-corner-all" onclick="cancelData();">取消</button>
+                            </div>
+                            <div class="ui-block-b">
+                                <button type="button" class="ui-btn ui-btn-b ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all" onclick="buttonData();">查询</button>
+                            </div>
+                        </div>
                     </fieldset>
                 </form>
             </div>
@@ -56,6 +63,11 @@
     $(function () {
         buttonData();
     });
+    function cancelData() {
+        $("#beginDate").val("");
+        $("#endDate").val("");
+        buttonData();
+    }
     function buttonData() {
         defaultPage = 1;
         defaultRows = 10;

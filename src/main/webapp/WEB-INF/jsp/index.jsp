@@ -40,6 +40,7 @@
     <div class="ui-content" role="main">
         <ul data-role="listview" data-theme="a" data-dividertheme="b">
             <li data-role="list-divider">生产类查询</li>
+            <li data-icon="refresh"><a href="${pageContext.request.contextPath}/woHead" target="_top">生产进度查询</a></li>
         </ul>
     </div><!-- /content -->
 </div><!-- /page -->

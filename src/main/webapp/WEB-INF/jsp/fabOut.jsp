@@ -38,7 +38,14 @@
                             <label for="customerName">客户简称</label>
                             <input type="text" name="customerName" id="customerName" value="">
                         </div>
-                        <button type="button" class="ui-btn ui-btn-b ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all" onclick="buttonData();">查询</button>
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <button type="button" class="ui-btn ui-btn-a ui-icon-back ui-btn-icon-left ui-shadow ui-corner-all" onclick="cancelData();">取消</button>
+                            </div>
+                            <div class="ui-block-b">
+                                <button type="button" class="ui-btn ui-btn-b ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all" onclick="buttonData();">查询</button>
+                            </div>
+                        </div>
                     </fieldset>
                 </form>
             </div>
@@ -60,6 +67,12 @@
     $(function () {
         buttonData();
     });
+    function cancelData() {
+        $("#beginDate").val("");
+        $("#endDate").val("");
+        $("#customerName").val("");
+        buttonData();
+    }
     function buttonData() {
         defaultPage = 1;
         defaultRows = 10;

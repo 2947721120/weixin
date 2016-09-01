@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>胚布库存查询</title>
+    <title>生产进度查询</title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/img/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/css/themes/default/jquery.mobile-1.4.5.min.css">
 </head>
@@ -14,7 +14,7 @@
 <div data-role="page" id="index">
 
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>胚布库存查询</h1>
+        <h1>生产进度查询</h1>
         <a href="${pageContext.request.contextPath}/" target="_top" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
     </div><!-- /header -->
 
@@ -32,6 +32,16 @@
                             <div class="ui-block-b">
                                 <label for="endDate">结束日期</label>
                                 <input type="date" name="date" id="endDate" value="">
+                            </div>
+                        </div>
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <label for="customerName">客户简称</label>
+                                <input type="text" name="customerName" id="customerName" value="">
+                            </div>
+                            <div class="ui-block-b">
+                                <label for="manuCrock">计划缸号</label>
+                                <input type="text" name="manuCrock" id="manuCrock" value="">
                             </div>
                         </div>
                         <div class="ui-grid-a">
@@ -59,13 +69,15 @@
     var contextPath = "${pageContext.request.contextPath}";
     var defaultPage = 1;
     var defaultRows = 10;
-    var order = "AsmDT desc";
+    var order = "a.CreateOrderDT desc";
     $(function () {
         buttonData();
     });
     function cancelData() {
         $("#beginDate").val("");
         $("#endDate").val("");
+        $("#customerName").val("");
+        $("#manuCrock").val("");
         buttonData();
     }
     function buttonData() {
@@ -90,13 +102,18 @@
         if ($("#endDate").val() != '') {
             params.endDate = $("#endDate").val();
         }
+        if ($("#customerName").val() != '') {
+            params.customerName = $("#customerName").val();
+        }
+        if ($("#manuCrock").val() != '') {
+            params.manuCrock = $("#manuCrock").val();
+        }
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/asm/findAsmSave",
+            url: "${pageContext.request.contextPath}/wo/findWoHead",
             dataType: "JSON",
             data: params,
             success: function (data) {
-                console.log(data);
                 appendHtml(data, isAppend);
             }
         });
@@ -106,12 +123,14 @@
         $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
-                appendHtml += "<li data-role='list-divider'>" + value.AsmNO + "<span class='ui-li-count'>库存匹数：" + value.StockPieces + "</span></li>";
+                var ProcedureCode = value.ProcedureCode.substr(value.ProcedureCode.lastIndexOf("->") + 2,value.ProcedureCode.length);
+                appendHtml += "<li data-role='list-divider'>" + value.ManuCrock + "<span class='ui-li-count'>匹数：" + value.Pieces + "</span></li>";
                 appendHtml += "<li><a href='#'><h2>客户简称：" + value.ParSingleName + "</h2>";
-                appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
-                appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
-                appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.AsmDT + "</strong></p>";
-                appendHtml += "<p class='ui-li-aside'><strong>库存重量：" + value.StockQuan + "</strong></p>";
+                appendHtml += "<p><strong>布类名称：" + value.ProdNameC + "</strong></p>";
+                appendHtml += "<p><strong>布类颜色：" + value.SName + "</strong></p>";
+                appendHtml += "<p><strong>开单日期：" + value.CreateOrderDT + "</strong></p>";
+                appendHtml += "<p class='ui-li-aside'><strong>完成工序：" + ProcedureCode + "</strong></p>";
+                appendHtml += "<p class='ui-li-count'><strong>数量：" + value.SubQuan + "</strong></p>";
                 appendHtml += "</a></li>";
             });
             if (isAppend) {
