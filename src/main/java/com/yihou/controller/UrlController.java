@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,8 @@ public class UrlController {
      * @return
      */
     @RequestMapping("/login")
-    public String login() {
+    public String login(HttpSession session) {
+        session.removeAttribute("LOGIN_USER");
         return "/login";
     }
 
