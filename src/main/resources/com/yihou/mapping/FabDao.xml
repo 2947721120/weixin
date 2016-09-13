@@ -8,7 +8,7 @@
         from FabInHead a left join Custom b on a.PartnerCode = b.ParComID
         <where>
             <if test="params.customerName != null">
-                b.ParSingleName LIKE "%${params.customerName}%"
+                b.ParSingleName = #{params.customerName}
             </if>
             <if test="params.beginDate != null">
                 AND a.FabInDT <![CDATA[>=]]> #{params.beginDate}
@@ -44,7 +44,7 @@
         from FabOutHead a left join Custom b on a.PartnerCode = b.ParComID
         <where>
             <if test="params.customerName != null">
-                b.ParSingleName LIKE "%${params.customerName}%"
+                b.ParSingleName = #{params.customerName}
             </if>
             <if test="params.beginDate != null">
                 AND a.FabOutDT <![CDATA[>=]]> #{params.beginDate}

@@ -55,12 +55,18 @@
 
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.mobile-1.4.5.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/plugins/js/jquery.ext.js"></script>
 <script>
     var contextPath = "${pageContext.request.contextPath}";
     var defaultPage = 1;
     var defaultRows = 10;
     var order = "a.AsmDT desc";
     $(function () {
+        var now = new Date();
+        now.setDate(now.getDate() -1);
+        var time = now.Format("yyyy-MM-dd");
+        $("#beginDate").val(time);
+        $("#endDate").val(time);
         buttonData();
     });
     function cancelData() {

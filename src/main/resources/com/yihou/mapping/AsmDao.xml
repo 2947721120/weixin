@@ -7,7 +7,7 @@
         from AsmInHead a left join Custom b on a.Customcode = b.ParComID
         <where>
             <if test="params.customerName != null">
-                b.ParSingleName LIKE "%${params.customerName}%"
+                b.ParSingleName LIKE '%${params.customerName}%'
             </if>
             <if test="params.beginDate != null">
                 AND a.AsmDT <![CDATA[>=]]> #{params.beginDate}

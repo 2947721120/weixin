@@ -22,7 +22,7 @@
         LEFT OUTER JOIN Product e ON a.ProdCode = e.ProdCode
         <where>
             <if test="params.customerName != null">
-                b.ParSingleName LIKE "%${params.customerName}%"
+                b.ParSingleName = #{params.customerName}
             </if>
             <if test="params.beginDate != null">
                 AND a.CreateOrderDT <![CDATA[>=]]> #{params.beginDate}
@@ -31,7 +31,7 @@
                 AND a.CreateOrderDT <![CDATA[<=]]> #{params.endDate}
             </if>
             <if test="params.manuCrock != null">
-                AND a.manuCrock LIKE "%${params.manuCrock}%"
+                AND a.manuCrock LIKE '%${params.manuCrock}%'
             </if>
         </where>
     </select>
