@@ -129,7 +129,11 @@
         $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
-                var ProcedureCode = value.ProcedureCode.substr(value.ProcedureCode.lastIndexOf("->") + 2,value.ProcedureCode.length);
+                //var ProcedureCode = value.ProcedureCode.substr(value.ProcedureCode.lastIndexOf("->") + 2,value.ProcedureCode.length);
+                var ProcedureCode = "";
+                if (value.NAME) {
+                    ProcedureCode = value.NAME;
+                }
                 appendHtml += "<li data-role='list-divider'>" + value.ManuCrock + "<span class='ui-li-count'>匹数：" + value.Pieces + "</span></li>";
                 appendHtml += "<li><a href='#'><h2>客户简称：" + value.ParSingleName + "</h2>";
                 appendHtml += "<p><strong>布类名称：" + value.ProdNameC + "</strong></p>";
