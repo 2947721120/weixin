@@ -52,7 +52,7 @@
                 </form>
             </div>
         </div>
-        <ul data-role="listview" data-inset="true" id="asmInHeadResult">
+        <ul data-role="listview" data-inset="true" id="matInHeadResult">
 
         </ul>
     </div><!-- /content -->
@@ -66,7 +66,7 @@
     var contextPath = "${pageContext.request.contextPath}";
     var defaultPage = 1;
     var defaultRows = 10;
-    var order = "a.AsmDT desc";
+    var order = "a.CreateDT desc";
     $(function () {
         var now = new Date();
         now.setDate(now.getDate() -1);
@@ -79,6 +79,7 @@
         $("#beginDate").val("");
         $("#endDate").val("");
         $("#customerName").val("");
+        $("#maName").val("");
         buttonData();
     }
     function buttonData() {
@@ -106,9 +107,12 @@
         if ($("#customerName").val() != '') {
             params.customerName = $("#customerName").val();
         }
+        if ($("#maName").val() != '') {
+            params.maName = $("#maName").val();
+        }
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/asm/findAsmInHead",
+            url: "${pageContext.request.contextPath}/mat/findMatInHead",
             dataType: "JSON",
             data: params,
             success: function (data) {
@@ -121,28 +125,27 @@
         $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
-                appendHtml += "<li data-role='list-divider'>" + value.AsmNO + "<span class='ui-li-count'>入库匹数：" + value.Pieces + "</span></li>";
-                appendHtml += "<li><a href='" + contextPath + "/asmInDetail/" + value.AsmNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
-                appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
-                appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
-                appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.AsmDT + "</strong></p>";
-                appendHtml += "<p class='ui-li-aside'><strong>入库重量：" + value.Weights + "</strong></p>";
+                appendHtml += "<li data-role='list-divider'>" + value.MatInNO + "<span class='ui-li-count'>入库匹数：" + value.pieces + "</span></li>";
+                appendHtml += "<li><a href='" + contextPath + "/mat/matInDetail/" + value.MatInNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
+                appendHtml += "<p><strong>部门：" + value.Name + "</strong></p>";
+                appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.CreateDT + "</strong></p>";
+                appendHtml += "<p class='ui-li-aside'><strong>入库数量：" + value.InQuan + "</strong></p>";
                 appendHtml += "</a></li>";
             });
             if (isAppend) {
-                $("#asmInHeadResult").append(appendHtml);
+                $("#matInHeadResult").append(appendHtml);
             } else {
-                $("#asmInHeadResult").html(appendHtml);
+                $("#matInHeadResult").html(appendHtml);
             }
-            $("#asmInHeadResult").append("<li id='clickMore'><a href='javascript:clickMore();'><h2><strong>点击加载更多数据</strong></h2></a></li>");
+            $("#matInHeadResult").append("<li id='clickMore'><a href='javascript:clickMore();'><h2><strong>点击加载更多数据</strong></h2></a></li>");
         } else {
             if (isAppend) {
-                $("#asmInHeadResult").append("<li data-role='list-divider'>数据已全部加载完成！</li>");
+                $("#matInHeadResult").append("<li data-role='list-divider'>数据已全部加载完成！</li>");
             } else {
-                $("#asmInHeadResult").html("<li data-role='list-divider'>当前条件没有更多数据！</li>");
+                $("#matInHeadResult").html("<li data-role='list-divider'>当前条件没有更多数据！</li>");
             }
         }
-        $("#asmInHeadResult").listview("refresh");
+        $("#matInHeadResult").listview("refresh");
     }
 </script>
 </body>

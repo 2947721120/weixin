@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yihou.dao.MatDao">
+    <!-- 查询染料助剂入库主表信息 -->
+    <select id="findMatInHead" resultType="map">
+        select a.*,b.ParComNameC,b.ParSingleName,c.Name
+        from MatInHead a
+        LEFT JOIN Custom b on a.SupplyerCode = b.ParComID
+        LEFT JOIN Store c on a.StoreCode = c.code
+        <where>
+            <if test="params.customerName != null">
+                b.ParSingleName = #{params.customerName}
+            </if>
+            <if test="params.beginDate != null">
+                AND a.CreateDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.CreateDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询染料助剂出库库主表信息 -->
+    <select id="findMatOutHead" resultType="map">
+        select a.* from AsmOutHead a
+        <where>
+            <if test="params.beginDate != null">
+                a.AsmDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.AsmDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询染料助剂入库明细信息 -->
+    <select id="findMatInDetail" resultType="map">
+        SELECT
+          a.*,b.ParSingleName,d.ProdNameC,c.InQuan
+        FROM MatInHead a
+        LEFT JOIN Custom b on a.SupplyerCode = b.ParComID
+        LEFT JOIN MatInDetail c on a.MatInNO = c.MatInNO
+        LEFT JOIN Materical d on c.ProdCode = d.prodcode
+        <where>
+            a.MatInNO = #{params.matInNo}
+        </where>
+    </select>
+
+    <!-- 查询染料助剂出库明细信息 -->
+    <select id="findMatOutDetail" resultType="map">
+        SELECT
+            a.AsmOutNO,a.ContNo,a.ManuCrock,a.DeptCode,a.AsmDT,a.ProdCode,a.ColorCode,a.Widesize,a.FndHeight,a.ProdSize,
+            a.ProdInch,a.CustOrderCode,a.TotalPin,a.Yarnbrand,a.OutStyle,a.StoreCode,a.Total TotalWeights,a.Pieces TotalPieces,
+            b.PieceNo,b.Pieces,b.Quan,b.Piecelen,
+            d.ProdNameC,e.SName
+        FROM AsmOutHead a
+        LEFT JOIN AsmOutDetail b ON a.AsmOutNO = b.AsmOutNO
+        LEFT JOIN Product d ON a.ProdCode = d.ProdCode
+        LEFT JOIN ProdColor e ON  a.ColorCode = e.SCode
+        <where>
+            a.AsmOutNO = #{params.asmNo}
+        </where>
+    </select>
+
+    <!-- 查询染料助剂库存 -->
+    <select id="findAsmSave" resultType="map">
+        SELECT
+            b.*,
+            a.StockPieces,
+            a.StockQuan,
+            c.ParSingleName
+        FROM
+        (
+            SELECT
+                AsmNo,
+                SUM(StockPieces) StockPieces,
+                ROUND(SUM(StockQuan), 2) StockQuan
+                FROM
+                AsmSave
+            WHERE
+              StockQuan > 0
+            GROUP BY
+              AsmNo
+        ) a
+        LEFT JOIN AsmInHead b ON a.AsmNo = b.AsmNO
+        LEFT JOIN Custom c on b.Customcode = c.ParComID
+        <where>
+            <if test="params.beginDate != null">
+                b.AsmDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND b.AsmDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+        </where>
+    </select>
+</mapper>

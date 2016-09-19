@@ -57,9 +57,9 @@
     <div class="ui-content" role="main">
         <ul data-role="listview" data-theme="a" data-dividertheme="b">
             <li data-role="list-divider">采购类查询</li>
-            <li data-icon="arrow-d-l"><a href="${pageContext.request.contextPath}/ma/maIn" target="_top">物料入库查询</a></li>
-            <li data-icon="arrow-u-r"><a href="${pageContext.request.contextPath}/ma/maOut" target="_top">物料出库查询</a></li>
-            <li data-icon="gear"><a href="${pageContext.request.contextPath}/ma/maSave" target="_top">物料库存查询</a></li>
+            <li data-icon="arrow-d-l"><a href="${pageContext.request.contextPath}/mat/matIn" target="_top">物料入库查询</a></li>
+            <li data-icon="arrow-u-r"><a href="${pageContext.request.contextPath}/mat/matOut" target="_top">物料出库查询</a></li>
+            <li data-icon="gear"><a href="${pageContext.request.contextPath}/mat/matSave" target="_top">物料库存查询</a></li>
         </ul>
     </div><!-- /content -->
 </div><!-- /page -->
