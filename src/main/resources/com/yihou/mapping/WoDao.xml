@@ -16,10 +16,10 @@
             a.SubQuan
         FROM
             WOHead a
-        LEFT OUTER JOIN Custom b ON a.CustCode = b.ParComID
-        LEFT OUTER JOIN ManuProcess c ON a.CurrProcCode = c.CODE
-        LEFT OUTER JOIN ProdColor d ON a.ColorCode = d.SCode
-        LEFT OUTER JOIN Product e ON a.ProdCode = e.ProdCode
+        LEFT JOIN Custom b ON a.CustCode = b.ParComID
+        LEFT JOIN ManuProcess c ON a.CurrProcCode = c.CODE
+        LEFT JOIN ProdColor d ON a.ColorCode = d.SCode
+        LEFT JOIN Product e ON a.ProdCode = e.ProdCode
         <where>
             <if test="params.customerName != null">
                 b.ParSingleName = #{params.customerName}

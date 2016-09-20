@@ -9,26 +9,32 @@
         LEFT JOIN Store c on a.StoreCode = c.code
         <where>
             <if test="params.customerName != null">
-                b.ParSingleName = #{params.customerName}
+                b.ParSingleName LIKE '%${params.customerName}%'
             </if>
             <if test="params.beginDate != null">
-                AND a.CreateDT <![CDATA[>=]]> #{params.beginDate}
+                AND a.MatinDT <![CDATA[>=]]> #{params.beginDate}
             </if>
             <if test="params.endDate != null">
-                AND a.CreateDT <![CDATA[<=]]> #{params.endDate}
+                AND a.MatinDT <![CDATA[<=]]> #{params.endDate}
             </if>
         </where>
     </select>
 
     <!-- 查询染料助剂出库库主表信息 -->
     <select id="findMatOutHead" resultType="map">
-        select a.* from AsmOutHead a
+        SELECT
+          a.*,b.Name
+        FROM MatOutHead a
+        LEFT JOIN Store b ON a.DeptCode = b.Code
         <where>
+            <if test="params.customerName != null">
+                b.Name LIKE '%${params.customerName}%'
+            </if>
             <if test="params.beginDate != null">
-                a.AsmDT <![CDATA[>=]]> #{params.beginDate}
+                AND a.OutDT <![CDATA[>=]]> #{params.beginDate}
             </if>
             <if test="params.endDate != null">
-                AND a.AsmDT <![CDATA[<=]]> #{params.endDate}
+                AND a.OutDT <![CDATA[<=]]> #{params.endDate}
             </if>
         </where>
     </select>
@@ -36,11 +42,12 @@
     <!-- 查询染料助剂入库明细信息 -->
     <select id="findMatInDetail" resultType="map">
         SELECT
-          a.*,b.ParSingleName,d.ProdNameC,c.InQuan
+          a.*,b.ParSingleName,d.ProdNameC,c.InQuan as 'InQuanDetail',c.ItemNO,e.Name
         FROM MatInHead a
         LEFT JOIN Custom b on a.SupplyerCode = b.ParComID
         LEFT JOIN MatInDetail c on a.MatInNO = c.MatInNO
         LEFT JOIN Materical d on c.ProdCode = d.prodcode
+        LEFT JOIN Store e ON a.StoreCode = e.Code
         <where>
             a.MatInNO = #{params.matInNo}
         </where>
@@ -49,47 +56,28 @@
     <!-- 查询染料助剂出库明细信息 -->
     <select id="findMatOutDetail" resultType="map">
         SELECT
-            a.AsmOutNO,a.ContNo,a.ManuCrock,a.DeptCode,a.AsmDT,a.ProdCode,a.ColorCode,a.Widesize,a.FndHeight,a.ProdSize,
-            a.ProdInch,a.CustOrderCode,a.TotalPin,a.Yarnbrand,a.OutStyle,a.StoreCode,a.Total TotalWeights,a.Pieces TotalPieces,
-            b.PieceNo,b.Pieces,b.Quan,b.Piecelen,
-            d.ProdNameC,e.SName
-        FROM AsmOutHead a
-        LEFT JOIN AsmOutDetail b ON a.AsmOutNO = b.AsmOutNO
-        LEFT JOIN Product d ON a.ProdCode = d.ProdCode
-        LEFT JOIN ProdColor e ON  a.ColorCode = e.SCode
+          a.*,b.Name,c.Name as 'StoreName',
+          d.ItemNo,d.OutQuan as 'OutQuanDetail',e.ProdNameC
+        FROM MatOutHead a
+        LEFT JOIN Store b ON a.DeptCode = b.Code
+        LEFT JOIN Store c ON a.StoreCode = c.Code
+        LEFT JOIN MatOutDetail d ON a.MatOutNO = d.MatOutNO
+        LEFT JOIN Materical e ON d.ProdCode = e.prodcode
         <where>
-            a.AsmOutNO = #{params.asmNo}
+            a.MatOutNO = #{params.matOutNo}
         </where>
     </select>
 
     <!-- 查询染料助剂库存 -->
-    <select id="findAsmSave" resultType="map">
+    <select id="findMatSave" resultType="map">
         SELECT
-            b.*,
-            a.StockPieces,
-            a.StockQuan,
-            c.ParSingleName
-        FROM
-        (
-            SELECT
-                AsmNo,
-                SUM(StockPieces) StockPieces,
-                ROUND(SUM(StockQuan), 2) StockQuan
-                FROM
-                AsmSave
-            WHERE
-              StockQuan > 0
-            GROUP BY
-              AsmNo
-        ) a
-        LEFT JOIN AsmInHead b ON a.AsmNo = b.AsmNO
-        LEFT JOIN Custom c on b.Customcode = c.ParComID
+          a.*,b.prodNameC
+        FROM MatMonRpt a
+        LEFT JOIN Materical b ON a.ProdCode = b.prodcode
         <where>
-            <if test="params.beginDate != null">
-                b.AsmDT <![CDATA[>=]]> #{params.beginDate}
-            </if>
-            <if test="params.endDate != null">
-                AND b.AsmDT <![CDATA[<=]]> #{params.endDate}
+            a.MatYear = #{params.matYear} and a.MatMonth = #{params.matMonth}
+            <if test="params.prodNameC != null">
+                and b.prodNameC LIKE '%${params.prodNameC}%'
             </if>
         </where>
     </select>

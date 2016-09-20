@@ -33,12 +33,7 @@
                             </div>
                         </div>
                         <div class="ui-grid-a">
-                            <div class="ui-block-a">
-                                <input type="text" name="customerName" id="customerName" value="" placeholder="客户简称">
-                            </div>
-                            <div class="ui-block-b">
-                                <input type="text" name="maName" id="maName" value="" placeholder="物料名称">
-                            </div>
+                            <input type="text" name="customerName" id="customerName" value="" placeholder="客户简称">
                         </div>
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
@@ -66,7 +61,7 @@
     var contextPath = "${pageContext.request.contextPath}";
     var defaultPage = 1;
     var defaultRows = 10;
-    var order = "a.CreateDT desc";
+    var order = "a.MatinDT desc";
     $(function () {
         var now = new Date();
         now.setDate(now.getDate() -1);
@@ -79,7 +74,7 @@
         $("#beginDate").val("");
         $("#endDate").val("");
         $("#customerName").val("");
-        $("#maName").val("");
+        //$("#maName").val("");
         buttonData();
     }
     function buttonData() {
@@ -107,9 +102,9 @@
         if ($("#customerName").val() != '') {
             params.customerName = $("#customerName").val();
         }
-        if ($("#maName").val() != '') {
+        /*if ($("#maName").val() != '') {
             params.maName = $("#maName").val();
-        }
+        }*/
         $.ajax({
             type: "post",
             url: "${pageContext.request.contextPath}/mat/findMatInHead",
