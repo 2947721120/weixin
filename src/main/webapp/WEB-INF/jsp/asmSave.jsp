@@ -26,13 +26,14 @@
                     <fieldset>
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
-                                <label for="beginDate">开始日期</label>
                                 <input type="date" name="date" id="beginDate" value="">
                             </div>
                             <div class="ui-block-b">
-                                <label for="endDate">结束日期</label>
                                 <input type="date" name="date" id="endDate" value="">
                             </div>
+                        </div>
+                        <div class="ui-grid-a">
+                            <input type="text" name="ParSingleName" id="ParSingleName" placeholder="客户简称">
                         </div>
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
@@ -72,6 +73,7 @@
     function cancelData() {
         $("#beginDate").val("");
         $("#endDate").val("");
+        $("#ParSingleName").val("");
         buttonData();
     }
     function buttonData() {
@@ -95,6 +97,9 @@
         }
         if ($("#endDate").val() != '') {
             params.endDate = $("#endDate").val();
+        }
+        if ($("#ParSingleName").val() != '') {
+            params.ParSingleName = $("#ParSingleName").val();
         }
         $.ajax({
             type: "post",

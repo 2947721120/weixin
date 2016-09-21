@@ -35,6 +35,9 @@
                             </div>
                         </div>
                         <div class="ui-grid-a">
+                            <input type="text" name="ParSingleName" id="ParSingleName" placeholder="客户简称">
+                        </div>
+                        <div class="ui-grid-a">
                             <div class="ui-block-a">
                                 <button type="button" class="ui-btn ui-btn-a ui-icon-back ui-btn-icon-left ui-shadow ui-corner-all" onclick="cancelData();">取消</button>
                             </div>
@@ -72,6 +75,7 @@
     function cancelData() {
         $("#beginDate").val("");
         $("#endDate").val("");
+        $("#ParSingleName").val("");
         buttonData();
     }
     function buttonData() {
@@ -95,6 +99,9 @@
         }
         if ($("#endDate").val() != '') {
             params.endDate = $("#endDate").val();
+        }
+        if ($("#ParSingleName").val() != '') {
+            params.ParSingleName = $("#ParSingleName").val();
         }
         $.ajax({
             type: "post",

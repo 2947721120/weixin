@@ -64,10 +64,11 @@ public class FabController {
 
     @RequestMapping("/findFabSave")
     @ResponseBody
-    public String findFabSave(Date beginDate, Date endDate,int page,int rows,String order) {
+    public String findFabSave(Date beginDate, Date endDate,String ParSingleName,int page,int rows,String order) {
         Map<String, Object> params = new HashMap<String,Object>();
         params.put("beginDate", beginDate);
         params.put("endDate", endDate);
+        params.put("ParSingleName", ParSingleName);
         SqlPage sqlPage = new SqlPage();
         sqlPage.setPage(page);
         sqlPage.setRows(rows);

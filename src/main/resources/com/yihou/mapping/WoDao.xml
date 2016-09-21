@@ -36,4 +36,26 @@
         </where>
     </select>
 
+    <select id="findDrawFab" resultType="map">
+        SELECT
+	      a.*,b.ManuCrock,e.ProdNameC,d.SName,c.Pieces,c.SubQuan
+        FROM
+          DrawFabHead a
+        LEFT JOIN DrawFabDetail b ON a.DrawFabNO = b.DrawFabNO
+        LEFT JOIN WOHead c ON b.ManuCrock = c.ManuCrock
+        LEFT JOIN ProdColor d ON c.ColorCode = d.SCode
+        LEFT JOIN Product e ON c.ProdCode = e.ProdCode
+        <where>
+            <if test="params.beginDate != null">
+                a.DrawDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.DrawDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+            <if test="params.manuCrock != null">
+                AND b.ManuCrock LIKE '%${params.manuCrock}%'
+            </if>
+        </where>
+    </select>
+    
 </mapper>

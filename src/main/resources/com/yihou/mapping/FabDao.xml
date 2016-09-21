@@ -101,6 +101,9 @@
             <if test="params.endDate != null">
                 AND b.FabInDT <![CDATA[<=]]> #{params.endDate}
             </if>
+            <if test="params.ParSingleName != null">
+                AND c.ParSingleName = #{params.ParSingleName}
+            </if>
         </where>
     </select>
 

@@ -47,5 +47,21 @@ public class WoController {
         return JSON.toJSONString(mapList, SerializerFeature.WriteDateUseDateFormat);
     }
 
+    @RequestMapping("/findDrawFab")
+    @ResponseBody
+    public String findDrawFab(Date beginDate, Date endDate,String manuCrock,int page,int rows,String order) {
+        Map<String, Object> params = new HashMap<String,Object>();
+        params.put("beginDate", beginDate);
+        params.put("endDate", endDate);
+        params.put("manuCrock", manuCrock);
+        SqlPage sqlPage = new SqlPage();
+        sqlPage.setPage(page);
+        sqlPage.setRows(rows);
+        sqlPage.setOrder(order);
+        List<Map<String, Object>> mapList = woService.findDrawFab(params, sqlPage);
+        JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
+        return JSON.toJSONString(mapList, SerializerFeature.WriteDateUseDateFormat);
+    }
+
 
 }
