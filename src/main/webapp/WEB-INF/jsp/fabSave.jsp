@@ -26,11 +26,9 @@
                     <fieldset>
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
-                                <label for="beginDate">开始日期</label>
                                 <input type="date" name="date" id="beginDate" value="">
                             </div>
                             <div class="ui-block-b">
-                                <label for="endDate">结束日期</label>
                                 <input type="date" name="date" id="endDate" value="">
                             </div>
                         </div>

@@ -23,11 +23,12 @@ public class UserController {
         Map<String, Object> params = new HashMap<>();
         params.put("userName", userName);
         params.put("userPwd", userPwd);
-        boolean b = userService.userLogin(params);
+        boolean b = userService.userLogin(params,session);
         if (b) {
-            session.setAttribute("LOGIN_USER", params);
+            session.setAttribute("LOGIN_USER", userName);
         } else {
             session.removeAttribute("LOGIN_USER");
+            session.removeAttribute("LOGIN_USER_TYPE");
         }
         return b;
     }

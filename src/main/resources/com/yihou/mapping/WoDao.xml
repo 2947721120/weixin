@@ -33,6 +33,9 @@
             <if test="params.manuCrock != null">
                 AND a.manuCrock LIKE '%${params.manuCrock}%'
             </if>
+            <if test="params.ParComID != null">
+                AND b.ParComID = #{params.ParComID}
+            </if>
         </where>
     </select>
 

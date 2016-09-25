@@ -26,17 +26,14 @@
                     <fieldset>
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
-                                <label for="beginDate">开始日期</label>
                                 <input type="date" name="date" id="beginDate" value="">
                             </div>
                             <div class="ui-block-b">
-                                <label for="endDate">结束日期</label>
                                 <input type="date" name="date" id="endDate" value="">
                             </div>
                         </div>
                         <div class="ui-grid-a">
-                            <label for="customerName">客户简称</label>
-                            <input type="text" name="customerName" id="customerName" value="">
+                            <input type="text" name="customerName" id="customerName" value="" placeholder="客户简称">
                         </div>
                         <div class="ui-grid-a">
                             <div class="ui-block-a">

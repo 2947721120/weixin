@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,12 +33,16 @@ public class WoController {
 
     @RequestMapping("/findWoHead")
     @ResponseBody
-    public String findWoHead(Date beginDate, Date endDate,String customerName,String manuCrock,int page,int rows,String order) {
+    public String findWoHead(Date beginDate, Date endDate, String customerName, String manuCrock, int page, int rows, String order, HttpSession session) {
         Map<String, Object> params = new HashMap<String,Object>();
         params.put("beginDate", beginDate);
         params.put("endDate", endDate);
         params.put("customerName", customerName);
         params.put("manuCrock", manuCrock);
+        Object loginUserType = session.getAttribute("LOGIN_USER_TYPE");
+        if (loginUserType != null && loginUserType.toString().equals("1")) {
+            params.put("ParComID", session.getAttribute("LOGIN_USER"));
+        }
         SqlPage sqlPage = new SqlPage();
         sqlPage.setPage(page);
         sqlPage.setRows(rows);
