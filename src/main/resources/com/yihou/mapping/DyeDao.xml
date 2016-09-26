@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yihou.dao.DyeDao">
+
+    <select id="findDyeMachineD" resultType="map">
+        SELECT
+            a.*,
+            b.ParSingleName,
+            c.NAME,
+            e.ProdNameC,
+            d.SName,
+            f.ColorCode,
+            f.Pieces,
+            f.SubQuan,
+            g.MHName,
+            g.CrockKind
+        FROM
+            DyeMachineD a
+        LEFT JOIN WOHead f ON a.Manu = f.ManuCrock
+        LEFT JOIN Custom b ON f.CustCode = b.ParComID
+        LEFT JOIN ManuProcess c ON f.CurrProcCode = c.CODE
+        LEFT JOIN ProdColor d ON f.ColorCode = d.SCode
+        LEFT JOIN Product e ON f.ProdCode = e.ProdCode
+        LEFT JOIN DyeMachineH g ON a.MHCode = g.MHCode
+        <where>
+            <if test="params.manuCrock != null">
+                a.Manu LIKE '%${params.manuCrock}%'
+            </if>
+            <if test="params.ParComID != null">
+                AND b.ParComID = #{params.ParComID}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yihou.dao.MatDao">
+    <!-- 查询染料助剂入库主表信息 -->
+    <select id="findMatInHead" resultType="map">
+        select a.*,b.ParComNameC,b.ParSingleName,c.Name
+        from MatInHead a
+        LEFT JOIN Custom b on a.SupplyerCode = b.ParComID
+        LEFT JOIN Store c on a.StoreCode = c.code
+        <where>
+            <if test="params.customerName != null">
+                b.ParSingleName LIKE '%${params.customerName}%'
+            </if>
+            <if test="params.beginDate != null">
+                AND a.MatinDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.MatinDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询染料助剂出库库主表信息 -->
+    <select id="findMatOutHead" resultType="map">
+        SELECT
+          a.*,b.Name
+        FROM MatOutHead a
+        LEFT JOIN Store b ON a.DeptCode = b.Code
+        <where>
+            <if test="params.customerName != null">
+                b.Name LIKE '%${params.customerName}%'
+            </if>
+            <if test="params.beginDate != null">
+                AND a.OutDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.OutDT <![CDATA[<=]]> #{params.endDate}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询染料助剂入库明细信息 -->
+    <select id="findMatInDetail" resultType="map">
+        SELECT
+          a.*,b.ParSingleName,d.ProdNameC,c.InQuan as 'InQuanDetail',c.ItemNO,e.Name
+        FROM MatInHead a
+        LEFT JOIN Custom b on a.SupplyerCode = b.ParComID
+        LEFT JOIN MatInDetail c on a.MatInNO = c.MatInNO
+        LEFT JOIN Materical d on c.ProdCode = d.prodcode
+        LEFT JOIN Store e ON a.StoreCode = e.Code
+        <where>
+            a.MatInNO = #{params.matInNo}
+        </where>
+    </select>
+
+    <!-- 查询染料助剂出库明细信息 -->
+    <select id="findMatOutDetail" resultType="map">
+        SELECT
+          a.*,b.Name,c.Name as 'StoreName',
+          d.ItemNo,d.OutQuan as 'OutQuanDetail',e.ProdNameC
+        FROM MatOutHead a
+        LEFT JOIN Store b ON a.DeptCode = b.Code
+        LEFT JOIN Store c ON a.StoreCode = c.Code
+        LEFT JOIN MatOutDetail d ON a.MatOutNO = d.MatOutNO
+        LEFT JOIN Materical e ON d.ProdCode = e.prodcode
+        <where>
+            a.MatOutNO = #{params.matOutNo}
+        </where>
+    </select>
+
+    <!-- 查询染料助剂库存 -->
+    <select id="findMatSave" resultType="map">
+        SELECT
+          a.*,b.prodNameC
+        FROM MatMonRpt a
+        LEFT JOIN Materical b ON a.ProdCode = b.prodcode
+        <where>
+            a.MatYear = #{params.matYear} and a.MatMonth = #{params.matMonth}
+            <if test="params.prodNameC != null">
+                and b.prodNameC LIKE '%${params.prodNameC}%'
+            </if>
+        </where>
+    </select>
+</mapper>

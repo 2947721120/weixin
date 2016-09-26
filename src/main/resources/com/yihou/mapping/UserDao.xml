@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yihou.dao.UserDao" >
-  <!-- 根据用户编号查询用户 -->
-  <select id="findOne" resultType="map">
-	SELECT * FROM UserInfo WHERE code = #{userName} AND password = #{userPwd}
-  </select>
+<mapper namespace="com.yihou.dao.UserDao">
+    <!-- 根据用户编号查询用户 -->
+    <select id="findOne" resultType="map">
+	  SELECT * FROM UserInfo WHERE code = #{userName} AND password = #{userPwd}
+    </select>
+
+    <select id="findCustomer" resultType="map">
+      SELECT * FROM Custom WHERE ParComID = #{userName} AND ParCINO = #{userPwd}
+    </select>
 </mapper>

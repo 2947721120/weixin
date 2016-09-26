@@ -18,4 +18,8 @@ public class WoService {
         return woDao.findWoHead(params,sqlPage);
     }
 
+    public List<Map<String, Object>> findDrawFab(Map<String, Object> params, SqlPage sqlPage) {
+        return woDao.findDrawFab(params,sqlPage);
+    }
+
 }

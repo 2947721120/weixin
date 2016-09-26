@@ -15,7 +15,7 @@
 
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>生产进度查询</h1>
-        <a href="${pageContext.request.contextPath}/" target="_top" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
+        <a href="${pageContext.request.contextPath}/#product" target="_top" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
     </div><!-- /header -->
 
     <div role="main" class="ui-content">
@@ -26,22 +26,18 @@
                     <fieldset>
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
-                                <label for="beginDate">开始日期</label>
                                 <input type="date" name="date" id="beginDate" value="">
                             </div>
                             <div class="ui-block-b">
-                                <label for="endDate">结束日期</label>
                                 <input type="date" name="date" id="endDate" value="">
                             </div>
                         </div>
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
-                                <label for="customerName">客户简称</label>
-                                <input type="text" name="customerName" id="customerName" value="">
+                                <input type="text" name="customerName" id="customerName" value="" placeholder="客户简称">
                             </div>
                             <div class="ui-block-b">
-                                <label for="manuCrock">计划缸号</label>
-                                <input type="text" name="manuCrock" id="manuCrock" value="">
+                                <input type="text" name="manuCrock" id="manuCrock" value="" placeholder="计划缸号">
                             </div>
                         </div>
                         <div class="ui-grid-a">

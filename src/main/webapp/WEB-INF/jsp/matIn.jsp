@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>成品库存查询</title>
+    <title>物料入库查询</title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/img/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/css/themes/default/jquery.mobile-1.4.5.min.css">
 </head>
@@ -14,8 +14,8 @@
 <div data-role="page" id="index">
 
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>成品库存查询</h1>
-        <a href="${pageContext.request.contextPath}/" target="_top" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
+        <h1>物料入库查询</h1>
+        <a href="${pageContext.request.contextPath}/#purchase" target="_top" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
     </div><!-- /header -->
 
     <div role="main" class="ui-content">
@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <div class="ui-grid-a">
-                            <input type="text" name="ParSingleName" id="ParSingleName" placeholder="客户简称">
+                            <input type="text" name="customerName" id="customerName" value="" placeholder="客户简称">
                         </div>
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
@@ -47,7 +47,7 @@
                 </form>
             </div>
         </div>
-        <ul data-role="listview" data-inset="true" id="asmInHeadResult">
+        <ul data-role="listview" data-inset="true" id="matInHeadResult">
 
         </ul>
     </div><!-- /content -->
@@ -61,7 +61,7 @@
     var contextPath = "${pageContext.request.contextPath}";
     var defaultPage = 1;
     var defaultRows = 10;
-    var order = "b.FabInDT desc";
+    var order = "a.MatinDT desc";
     $(function () {
         var now = new Date();
         now.setDate(now.getDate() -1);
@@ -73,7 +73,8 @@
     function cancelData() {
         $("#beginDate").val("");
         $("#endDate").val("");
-        $("#ParSingleName").val("");
+        $("#customerName").val("");
+        //$("#maName").val("");
         buttonData();
     }
     function buttonData() {
@@ -98,16 +99,18 @@
         if ($("#endDate").val() != '') {
             params.endDate = $("#endDate").val();
         }
-        if ($("#ParSingleName").val() != '') {
-            params.ParSingleName = $("#ParSingleName").val();
+        if ($("#customerName").val() != '') {
+            params.customerName = $("#customerName").val();
         }
+        /*if ($("#maName").val() != '') {
+            params.maName = $("#maName").val();
+        }*/
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/fab/findFabSave",
+            url: "${pageContext.request.contextPath}/mat/findMatInHead",
             dataType: "JSON",
             data: params,
             success: function (data) {
-                console.log(data);
                 appendHtml(data, isAppend);
             }
         });
@@ -117,27 +120,27 @@
         $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
-                appendHtml += "<li data-role='list-divider'>" + value.FabInNO + "<span class='ui-li-count'>库存重量：" + value.StockQuan + "</span></li>";
-                appendHtml += "<li><a href='#'><h2>客户简称：" + value.ParSingleName + "</h2>";
-                appendHtml += "<p><strong>门幅：" + value.WideSize + "</strong></p>";
-                appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
-                appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.FabInDT + "</strong></p>";
+                appendHtml += "<li data-role='list-divider'>" + value.MatInNO + "<span class='ui-li-count'>入库匹数：" + value.pieces + "</span></li>";
+                appendHtml += "<li><a href='" + contextPath + "/mat/matInDetail/" + value.MatInNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
+                appendHtml += "<p><strong>部门：" + value.Name + "</strong></p>";
+                appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.CreateDT + "</strong></p>";
+                appendHtml += "<p class='ui-li-aside'><strong>入库数量：" + value.InQuan + "</strong></p>";
                 appendHtml += "</a></li>";
             });
             if (isAppend) {
-                $("#asmInHeadResult").append(appendHtml);
+                $("#matInHeadResult").append(appendHtml);
             } else {
-                $("#asmInHeadResult").html(appendHtml);
+                $("#matInHeadResult").html(appendHtml);
             }
-            $("#asmInHeadResult").append("<li id='clickMore'><a href='javascript:clickMore();'><h2><strong>点击加载更多数据</strong></h2></a></li>");
+            $("#matInHeadResult").append("<li id='clickMore'><a href='javascript:clickMore();'><h2><strong>点击加载更多数据</strong></h2></a></li>");
         } else {
             if (isAppend) {
-                $("#asmInHeadResult").append("<li data-role='list-divider'>数据已全部加载完成！</li>");
+                $("#matInHeadResult").append("<li data-role='list-divider'>数据已全部加载完成！</li>");
             } else {
-                $("#asmInHeadResult").html("<li data-role='list-divider'>当前条件没有更多数据！</li>");
+                $("#matInHeadResult").html("<li data-role='list-divider'>当前条件没有更多数据！</li>");
             }
         }
-        $("#asmInHeadResult").listview("refresh");
+        $("#matInHeadResult").listview("refresh");
     }
 </script>
 </body>
