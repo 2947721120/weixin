@@ -15,7 +15,7 @@
                 AND a.MatinDT <![CDATA[>=]]> #{params.beginDate}
             </if>
             <if test="params.endDate != null">
-                AND a.MatinDT <![CDATA[<=]]> #{params.endDate}
+                AND a.MatinDT <![CDATA[<]]> #{params.endDate}
             </if>
         </where>
     </select>
@@ -34,7 +34,7 @@
                 AND a.OutDT <![CDATA[>=]]> #{params.beginDate}
             </if>
             <if test="params.endDate != null">
-                AND a.OutDT <![CDATA[<=]]> #{params.endDate}
+                AND a.OutDT <![CDATA[<]]> #{params.endDate}
             </if>
         </where>
     </select>

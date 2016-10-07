@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.yihou.model.SqlPage;
 import com.yihou.service.WoService;
+import com.yihou.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class WoController {
     public String findWoHead(Date beginDate, Date endDate, String customerName, String manuCrock, int page, int rows, String order, HttpSession session) {
         Map<String, Object> params = new HashMap<String,Object>();
         params.put("beginDate", beginDate);
-        params.put("endDate", endDate);
+        params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("customerName", customerName);
         params.put("manuCrock", manuCrock);
         Object loginUserType = session.getAttribute("LOGIN_USER_TYPE");
@@ -57,7 +58,7 @@ public class WoController {
     public String findDrawFab(Date beginDate, Date endDate,String manuCrock,int page,int rows,String order) {
         Map<String, Object> params = new HashMap<String,Object>();
         params.put("beginDate", beginDate);
-        params.put("endDate", endDate);
+        params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("manuCrock", manuCrock);
         SqlPage sqlPage = new SqlPage();
         sqlPage.setPage(page);

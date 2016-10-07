@@ -14,7 +14,7 @@
                 AND a.FabInDT <![CDATA[>=]]> #{params.beginDate}
             </if>
             <if test="params.endDate != null">
-                AND a.FabInDT <![CDATA[<=]]> #{params.endDate}
+                AND a.FabInDT <![CDATA[<]]> #{params.endDate}
             </if>
             <if test="params.ParComID != null">
                 AND b.ParComID = #{params.ParComID}
@@ -53,7 +53,7 @@
                 AND a.FabOutDT <![CDATA[>=]]> #{params.beginDate}
             </if>
             <if test="params.endDate != null">
-                AND a.FabOutDT <![CDATA[<=]]> #{params.endDate}
+                AND a.FabOutDT <![CDATA[<]]> #{params.endDate}
             </if>
             <if test="params.ParComID != null">
                 AND b.ParComID = #{params.ParComID}
@@ -105,7 +105,7 @@
                 b.FabInDT <![CDATA[>=]]> #{params.beginDate}
             </if>
             <if test="params.endDate != null">
-                AND b.FabInDT <![CDATA[<=]]> #{params.endDate}
+                AND b.FabInDT <![CDATA[<]]> #{params.endDate}
             </if>
             <if test="params.ParSingleName != null">
                 AND c.ParSingleName = #{params.ParSingleName}

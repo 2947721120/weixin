@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.yihou.model.SqlPage;
 import com.yihou.service.FabService;
+import com.yihou.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -33,10 +34,10 @@ public class FabController {
 
     @RequestMapping("/findFabInHead")
     @ResponseBody
-    public String findAsmInHead(Date beginDate, Date endDate,String customerName,int page,int rows,String order,HttpSession session) {
-        Map<String, Object> params = new HashMap<String,Object>();
+    public String findAsmInHead(Date beginDate, Date endDate, String customerName, int page, int rows, String order, HttpSession session) {
+        Map<String, Object> params = new HashMap<String, Object>();
         params.put("beginDate", beginDate);
-        params.put("endDate", endDate);
+        params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("customerName", customerName);
         Object loginUserType = session.getAttribute("LOGIN_USER_TYPE");
         if (loginUserType != null && loginUserType.toString().equals("1")) {
@@ -53,10 +54,10 @@ public class FabController {
 
     @RequestMapping("/findFabOutHead")
     @ResponseBody
-    public String findAsmOutHead(Date beginDate, Date endDate,String customerName,int page,int rows,String order,HttpSession session) {
-        Map<String, Object> params = new HashMap<String,Object>();
+    public String findAsmOutHead(Date beginDate, Date endDate, String customerName, int page, int rows, String order, HttpSession session) {
+        Map<String, Object> params = new HashMap<String, Object>();
         params.put("beginDate", beginDate);
-        params.put("endDate", endDate);
+        params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("customerName", customerName);
         Object loginUserType = session.getAttribute("LOGIN_USER_TYPE");
         if (loginUserType != null && loginUserType.toString().equals("1")) {
@@ -73,10 +74,10 @@ public class FabController {
 
     @RequestMapping("/findFabSave")
     @ResponseBody
-    public String findFabSave(Date beginDate, Date endDate,String ParSingleName,int page,int rows,String order,HttpSession session) {
-        Map<String, Object> params = new HashMap<String,Object>();
+    public String findFabSave(Date beginDate, Date endDate, String ParSingleName, int page, int rows, String order, HttpSession session) {
+        Map<String, Object> params = new HashMap<String, Object>();
         params.put("beginDate", beginDate);
-        params.put("endDate", endDate);
+        params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("ParSingleName", ParSingleName);
         Object loginUserType = session.getAttribute("LOGIN_USER_TYPE");
         if (loginUserType != null && loginUserType.toString().equals("1")) {

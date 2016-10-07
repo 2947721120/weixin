@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.yihou.model.SqlPage;
 import com.yihou.service.AsmService;
+import com.yihou.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class AsmController {
     public String findAsmInHead(Date beginDate, Date endDate,String customerName,int page,int rows,String order,HttpSession session) {
         Map<String, Object> params = new HashMap<String,Object>();
         params.put("beginDate", beginDate);
-        params.put("endDate", endDate);
+        params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("customerName", customerName);
         Object loginUserType = session.getAttribute("LOGIN_USER_TYPE");
         if (loginUserType != null && loginUserType.toString().equals("1")) {
@@ -56,7 +57,7 @@ public class AsmController {
     public String findAsmOutHead(Date beginDate, Date endDate,int page,int rows,String order) {
         Map<String, Object> params = new HashMap<String,Object>();
         params.put("beginDate", beginDate);
-        params.put("endDate", endDate);
+        params.put("endDate", DateUtil.addDay(endDate, 1));
         SqlPage sqlPage = new SqlPage();
         sqlPage.setPage(page);
         sqlPage.setRows(rows);
@@ -71,7 +72,7 @@ public class AsmController {
     public String findAsmSave(Date beginDate, Date endDate,String ParSingleName,int page,int rows,String order,HttpSession session) {
         Map<String, Object> params = new HashMap<String,Object>();
         params.put("beginDate", beginDate);
-        params.put("endDate", endDate);
+        params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("ParSingleName", ParSingleName);
         Object loginUserType = session.getAttribute("LOGIN_USER_TYPE");
         if (loginUserType != null && loginUserType.toString().equals("1")) {

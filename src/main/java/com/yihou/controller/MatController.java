@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.yihou.model.SqlPage;
 import com.yihou.service.MatService;
+import com.yihou.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -44,7 +45,7 @@ public class MatController {
     public String findMatInHead(Date beginDate, Date endDate, String customerName, String maName, int page, int rows, String order) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("beginDate", beginDate);
-        params.put("endDate", endDate);
+        params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("customerName", customerName);
         params.put("maName", maName);
         SqlPage sqlPage = new SqlPage();
@@ -74,7 +75,7 @@ public class MatController {
     public String findMatOutHead(Date beginDate, Date endDate, String customerName, String maName, int page, int rows, String order) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("beginDate", beginDate);
-        params.put("endDate", endDate);
+        params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("customerName", customerName);
         params.put("maName", maName);
         SqlPage sqlPage = new SqlPage();

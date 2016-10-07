@@ -28,7 +28,7 @@
                 AND a.CreateOrderDT <![CDATA[>=]]> #{params.beginDate}
             </if>
             <if test="params.endDate != null">
-                AND a.CreateOrderDT <![CDATA[<=]]> #{params.endDate}
+                AND a.CreateOrderDT <![CDATA[<]]> #{params.endDate}
             </if>
             <if test="params.manuCrock != null">
                 AND a.manuCrock LIKE '%${params.manuCrock}%'
@@ -53,7 +53,7 @@
                 a.DrawDT <![CDATA[>=]]> #{params.beginDate}
             </if>
             <if test="params.endDate != null">
-                AND a.DrawDT <![CDATA[<=]]> #{params.endDate}
+                AND a.DrawDT <![CDATA[<]]> #{params.endDate}
             </if>
             <if test="params.manuCrock != null">
                 AND b.ManuCrock LIKE '%${params.manuCrock}%'
