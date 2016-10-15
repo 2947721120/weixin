@@ -33,7 +33,12 @@
                             </div>
                         </div>
                         <div class="ui-grid-a">
-                            <input type="text" name="ParSingleName" id="ParSingleName" placeholder="客户简称">
+                            <div class="ui-block-a">
+                                <input type="text" name="ParSingleName" id="ParSingleName" value="" placeholder="客户简称">
+                            </div>
+                            <div class="ui-block-b">
+                                <input type="text" name="custOrderNO" id="custOrderNO" value="" placeholder="客来单号">
+                            </div>
                         </div>
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
@@ -74,6 +79,7 @@
         $("#beginDate").val("");
         $("#endDate").val("");
         $("#ParSingleName").val("");
+        $("#custOrderNO").val("");
         buttonData();
     }
     function buttonData() {
@@ -101,6 +107,9 @@
         if ($("#ParSingleName").val() != '') {
             params.ParSingleName = $("#ParSingleName").val();
         }
+        if ($("#custOrderNO").val() != '') {
+            params.custOrderNO = $("#custOrderNO").val();
+        }
         $.ajax({
             type: "post",
             url: "${pageContext.request.contextPath}/fab/findFabSave",
@@ -117,8 +126,12 @@
         $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
+                var colorName = value.ProdColor + "->" + value.SName;
                 appendHtml += "<li data-role='list-divider'>" + value.FabInNO + "<span class='ui-li-count'>库存重量：" + value.StockQuan + "</span></li>";
                 appendHtml += "<li><a href='#'><h2>客户简称：" + value.ParSingleName + "</h2>";
+                appendHtml += "<p><strong>客来单号：" + value.CustOrderNO + "</strong></p>";
+                appendHtml += "<p><strong>布类名称：" + value.ProdNameC + "</strong></p>";
+                appendHtml += "<p><strong>颜色：" + colorName + "</strong></p>";
                 appendHtml += "<p><strong>门幅：" + value.WideSize + "</strong></p>";
                 appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
                 appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.FabInDT + "</strong></p>";

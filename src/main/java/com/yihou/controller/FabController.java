@@ -34,11 +34,12 @@ public class FabController {
 
     @RequestMapping("/findFabInHead")
     @ResponseBody
-    public String findAsmInHead(Date beginDate, Date endDate, String customerName, int page, int rows, String order, HttpSession session) {
+    public String findAsmInHead(Date beginDate, Date endDate, String customerName, String custOrderNO, int page, int rows, String order, HttpSession session) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("beginDate", beginDate);
         params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("customerName", customerName);
+        params.put("custOrderNO", custOrderNO);
         Object loginUserType = session.getAttribute("LOGIN_USER_TYPE");
         if (loginUserType != null && loginUserType.toString().equals("1")) {
             params.put("ParComID", session.getAttribute("LOGIN_USER"));
@@ -54,11 +55,12 @@ public class FabController {
 
     @RequestMapping("/findFabOutHead")
     @ResponseBody
-    public String findAsmOutHead(Date beginDate, Date endDate, String customerName, int page, int rows, String order, HttpSession session) {
+    public String findAsmOutHead(Date beginDate, Date endDate, String customerName, String custOrderNO, int page, int rows, String order, HttpSession session) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("beginDate", beginDate);
         params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("customerName", customerName);
+        params.put("custOrderNO", custOrderNO);
         Object loginUserType = session.getAttribute("LOGIN_USER_TYPE");
         if (loginUserType != null && loginUserType.toString().equals("1")) {
             params.put("ParComID", session.getAttribute("LOGIN_USER"));
@@ -74,11 +76,12 @@ public class FabController {
 
     @RequestMapping("/findFabSave")
     @ResponseBody
-    public String findFabSave(Date beginDate, Date endDate, String ParSingleName, int page, int rows, String order, HttpSession session) {
+    public String findFabSave(Date beginDate, Date endDate, String ParSingleName, String custOrderNO, int page, int rows, String order, HttpSession session) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("beginDate", beginDate);
         params.put("endDate", DateUtil.addDay(endDate, 1));
         params.put("ParSingleName", ParSingleName);
+        params.put("custOrderNO", custOrderNO);
         Object loginUserType = session.getAttribute("LOGIN_USER_TYPE");
         if (loginUserType != null && loginUserType.toString().equals("1")) {
             params.put("ParComID", session.getAttribute("LOGIN_USER"));

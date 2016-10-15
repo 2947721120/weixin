@@ -4,8 +4,11 @@
 
     <!-- 查询成品入库主表信息 -->
     <select id="findFabInHead" resultType="map">
-        select a.*,b.ParComNameC,b.ParSingleName
+        select a.*,b.ParComNameC,b.ParSingleName,c.ProdNameC,d.SName,e.CustOrderNO
         from FabInHead a left join Custom b on a.PartnerCode = b.ParComID
+        LEFT JOIN Product c ON a.ProdCode = c.ProdCode
+        LEFT JOIN ProdColor d ON a.ProdColor = d.SCode
+        LEFT JOIN WOHead e ON a.ManuCrock = e.ManuCrock
         <where>
             <if test="params.customerName != null">
                 b.ParSingleName = #{params.customerName}
@@ -18,6 +21,9 @@
             </if>
             <if test="params.ParComID != null">
                 AND b.ParComID = #{params.ParComID}
+            </if>
+            <if test="params.custOrderNO != null">
+                AND e.CustOrderNO LIKE '%${params.custOrderNO}%'
             </if>
         </where>
     </select>
@@ -43,8 +49,11 @@
 
     <!-- 查询成品出库库主表信息 -->
     <select id="findFabOutHead" resultType="map">
-        select a.* ,b.ParComNameC,b.ParSingleName
+        select a.* ,b.ParComNameC,b.ParSingleName,c.ProdNameC,d.SName,e.CustOrderNO
         from FabOutHead a left join Custom b on a.PartnerCode = b.ParComID
+        LEFT JOIN Product c ON a.ProdCode = c.ProdCode
+        LEFT JOIN ProdColor d ON a.ProdColor = d.SCode
+        LEFT JOIN WOHead e ON a.ManuCrock = e.ManuCrock
         <where>
             <if test="params.customerName != null">
                 b.ParSingleName = #{params.customerName}
@@ -57,6 +66,9 @@
             </if>
             <if test="params.ParComID != null">
                 AND b.ParComID = #{params.ParComID}
+            </if>
+            <if test="params.custOrderNO != null">
+                AND e.CustOrderNO LIKE '%${params.custOrderNO}%'
             </if>
         </where>
     </select>
@@ -85,7 +97,10 @@
         SELECT
         b.*,
         a.StockQuan,
-        c.ParSingleName
+        c.ParSingleName,
+        d.ProdNameC,
+        e.SName,
+        f.CustOrderNO
         FROM
         (
         SELECT
@@ -100,6 +115,9 @@
         ) a
         LEFT JOIN FabInHead b ON a.FabinNo = b.FabinNo
         LEFT JOIN Custom c on b.PartnerCode = c.ParComID
+        LEFT JOIN Product d ON b.ProdCode = d.ProdCode
+        LEFT JOIN ProdColor e ON b.ProdColor = e.SCode
+        LEFT JOIN WOHead f ON b.ManuCrock = f.ManuCrock
         <where>
             <if test="params.beginDate != null">
                 b.FabInDT <![CDATA[>=]]> #{params.beginDate}
@@ -112,6 +130,9 @@
             </if>
             <if test="params.ParComID != null">
                 AND c.ParComID = #{params.ParComID}
+            </if>
+            <if test="params.custOrderNO != null">
+                AND f.CustOrderNO LIKE '%${params.custOrderNO}%'
             </if>
         </where>
     </select>

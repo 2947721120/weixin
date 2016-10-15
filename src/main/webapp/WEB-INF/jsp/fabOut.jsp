@@ -33,7 +33,12 @@
                             </div>
                         </div>
                         <div class="ui-grid-a">
-                            <input type="text" name="customerName" id="customerName" value="" placeholder="客户简称">
+                            <div class="ui-block-a">
+                                <input type="text" name="customerName" id="customerName" value="" placeholder="客户简称">
+                            </div>
+                            <div class="ui-block-b">
+                                <input type="text" name="custOrderNO" id="custOrderNO" value="" placeholder="客来单号">
+                            </div>
                         </div>
                         <div class="ui-grid-a">
                             <div class="ui-block-a">
@@ -74,6 +79,7 @@
         $("#beginDate").val("");
         $("#endDate").val("");
         $("#customerName").val("");
+        $("#custOrderNO").val("");
         buttonData();
     }
     function buttonData() {
@@ -101,6 +107,9 @@
         if ($("#customerName").val() != '') {
             params.customerName = $("#customerName").val();
         }
+        if ($("#custOrderNO").val() != '') {
+            params.custOrderNO = $("#custOrderNO").val();
+        }
         $.ajax({
             type: "post",
             url: "${pageContext.request.contextPath}/fab/findFabOutHead",
@@ -117,8 +126,12 @@
         $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
+                var colorName = value.ProdColor + "->" + value.SName;
                 appendHtml += "<li data-role='list-divider'>" + value.FabOutNO + "<span class='ui-li-count'>出库匹数：" + value.Pieces + "</span></li>";
                 appendHtml += "<li><a href='" + contextPath + "/fabOutDetail/" + value.FabOutNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
+                appendHtml += "<p><strong>客来单号：" + value.CustOrderNO + "</strong></p>";
+                appendHtml += "<p><strong>布类名称：" + value.ProdNameC + "</strong></p>";
+                appendHtml += "<p><strong>颜色：" + colorName + "</strong></p>";
                 appendHtml += "<p><strong>门幅：" + value.WideSize + "</strong></p>";
                 appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
                 appendHtml += "<p class='ui-li-count'><strong>出库时间：" + value.FabOutDT + "</strong></p>";
