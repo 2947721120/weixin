@@ -66,7 +66,7 @@
     var contextPath = "${pageContext.request.contextPath}";
     var defaultPage = 1;
     var defaultRows = 10;
-    var order = "a.FabOutDT desc";
+    var order = "f.AccDT desc";
     $(function () {
         var now = new Date();
         now.setDate(now.getDate() -1);
@@ -126,17 +126,18 @@
         $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
-                var colorName = value.ProdColor + "->" + value.SName;
-                appendHtml += "<li data-role='list-divider'>" + value.FabOutNO + "<span class='ui-li-count'>出库匹数：" + value.Pieces + "</span></li>";
-                appendHtml += "<li><a href='" + contextPath + "/fabOutDetail/" + value.FabOutNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
+                var colorName = value.ColorCode + "->" + value.SName;
+                appendHtml += "<li data-role='list-divider'>" + value.AccNo + "<span class='ui-li-count'>匹数：" + value.Pieces + "</span></li>";
+                appendHtml += "<li><h2>客户简称：" + value.ParSingleName + "</h2>";
+                appendHtml += "<p><strong>计划缸号：" + value.FabOutNO + "</strong></p>";
                 appendHtml += "<p><strong>客来单号：" + value.CustOrderNO + "</strong></p>";
                 appendHtml += "<p><strong>布类名称：" + value.ProdNameC + "</strong></p>";
-                appendHtml += "<p><strong>颜色：" + colorName + "</strong></p>";
-                appendHtml += "<p><strong>门幅：" + value.WideSize + "</strong></p>";
-                appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
-                appendHtml += "<p class='ui-li-count'><strong>出库时间：" + value.FabOutDT + "</strong></p>";
+                appendHtml += "<p><strong>色号：" + colorName + "</strong></p>";
+                appendHtml += "<p><strong>门幅：" + value.widesize + "</strong></p>";
+                appendHtml += "<p><strong>克重：" + value.fndHeight + "</strong></p>";
+                appendHtml += "<p class='ui-li-count'><strong>出库时间：" + value.AccDT + "</strong></p>";
                 appendHtml += "<p class='ui-li-aside'><strong>出库重量：" + value.Quan + "</strong></p>";
-                appendHtml += "</a></li>";
+                appendHtml += "</li>";
             });
             if (isAppend) {
                 $("#asmOutHeadResult").append(appendHtml);

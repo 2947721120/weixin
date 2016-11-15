@@ -27,13 +27,13 @@
                 <div class="ui-block-a">
                     <div class="ui-bar ui-bar-a">
                         <label>出库编号：</label>
-                        <label>${head.FabOutNO}</label>
+                        <label>${head.AccNo}</label>
                     </div>
                 </div>
                 <div class="ui-block-b">
                     <div class="ui-bar ui-bar-a">
                         <label>出库客户：</label>
-                        <label>${head.ParSingleName}</label>
+                        <label>${head.SingleName}</label>
                     </div>
                 </div>
             </div>
@@ -44,14 +44,14 @@
                         <label>${fn:substring(head.FabOutDT, 0, 10)}</label>
                     </div>
                 </div>
-                <div class="ui-block-b">
+                <%--<div class="ui-block-b">
                     <div class="ui-bar ui-bar-a">
-                        <label>缸　　号：</label>
-                        <label>${head.ManuCrock}</label>
+                        <label>匹　　号：</label>
+                        <label>${head.ItemNO}</label>
                     </div>
-                </div>
+                </div>--%>
             </div>
-            <div class="ui-grid-a">
+            <%--<div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="ui-bar ui-bar-a">
                         <label>门　　幅：</label>
@@ -64,8 +64,8 @@
                         <label>${head.FndHeight}</label>
                     </div>
                 </div>
-            </div>
-            <div class="ui-grid-a">
+            </div>--%>
+            <%--<div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="ui-bar ui-bar-a">
                         <label>布　　类</label>
@@ -78,12 +78,12 @@
                         <label>${head.SName}</label>
                     </div>
                 </div>
-            </div>
-            <div class="ui-grid-a">
+            </div>--%>
+            <%--<div class="ui-grid-a">
                 <div class="ui-block-a">
                     <div class="ui-bar ui-bar-a">
                         <label>出库匹数</label>
-                        <label>${head.TotalPieces}</label>
+                        <label>${head.DeliUser}</label>
                     </div>
                 </div>
                 <div class="ui-block-b">
@@ -92,7 +92,7 @@
                         <label>${head.TotalWeights}</label>
                     </div>
                 </div>
-            </div>
+            </div>--%>
         </div>
         <div class="ui-body ui-body-a ui-corner-all">
             <table data-role="table" class="ui-responsive table-stroke">
@@ -107,9 +107,9 @@
                     <c:if test="${!empty detail}">
                         <c:forEach var="item" items="${detail}" varStatus="status">
                             <tr>
-                                <th>${item.PieceNo}</th>
-                                <td>${item.Piecelen}</td>
-                                <td>${item.Quan}</td>
+                                <th>${item.ItemNO}</th>
+                                <td>${item.Pieces}</td>
+                                <td>${item.DeliUser}</td>
                             </tr>
                         </c:forEach>
                     </c:if>

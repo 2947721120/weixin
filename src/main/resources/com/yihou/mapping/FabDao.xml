@@ -49,47 +49,44 @@
 
     <!-- 查询成品出库库主表信息 -->
     <select id="findFabOutHead" resultType="map">
-        select a.* ,b.ParComNameC,b.ParSingleName,c.ProdNameC,d.SName,e.CustOrderNO
-        from FabOutHead a left join Custom b on a.PartnerCode = b.ParComID
-        LEFT JOIN Product c ON a.ProdCode = c.ProdCode
-        LEFT JOIN ProdColor d ON a.ProdColor = d.SCode
-        LEFT JOIN WOHead e ON a.ManuCrock = e.ManuCrock
+        SELECT   e.AccNo,f.AccDT,e.FabOutNO,d.ProdNameC,a.ColorCode,
+        c.SName, a.widesize, a.fndHeight, b.ParSingleName,
+        e.Pieces,e.Quan,a.CustOrderNO
+        FROM      WOHead a LEFT OUTER JOIN
+        Custom b ON a.CustCode = b.ParComID LEFT OUTER JOIN
+        ProdColor c ON a.ColorCode = c.SCode LEFT OUTER JOIN
+        Product d ON a.ProdCode = d.ProdCode LEFT OUTER JOIN
+        FabAccountDetail e ON a.ManuCrock = e.FabOutNO LEFT OUTER JOIN
+        FabAccountHead f ON e.AccNo = f.AccNo
         <where>
+            (e.AccNo IS NOT NULL)
             <if test="params.customerName != null">
-                b.ParSingleName = #{params.customerName}
+                AND b.ParSingleName = #{params.customerName}
             </if>
             <if test="params.beginDate != null">
-                AND a.FabOutDT <![CDATA[>=]]> #{params.beginDate}
+                AND f.AccDT <![CDATA[>=]]> #{params.beginDate}
             </if>
             <if test="params.endDate != null">
-                AND a.FabOutDT <![CDATA[<]]> #{params.endDate}
+                AND f.AccDT <![CDATA[<]]> #{params.endDate}
             </if>
             <if test="params.ParComID != null">
                 AND b.ParComID = #{params.ParComID}
             </if>
             <if test="params.custOrderNO != null">
-                AND e.CustOrderNO LIKE '%${params.custOrderNO}%'
+                AND a.CustOrderNO LIKE '%${params.custOrderNO}%'
             </if>
         </where>
     </select>
 
     <!-- 查询成品出库明细信息 -->
     <select id="findFabOutDetail" resultType="map">
-        SELECT
-        a.FabOutNO,a.ContCode,a.ManuCrock,a.PartnerCode,a.FabOutDT,a.ProdCode,a.ProdColor,a.Widesize,a.FndHeight,a.ProdSize,
-        a.ProdInchCount,a.Quan TotalWeights,a.Pieces TotalPieces,
-        b.PieceNo,b.Quan,b.Piecelen,
-        d.ProdNameC,e.SName,
-        f.ParComNameC,f.ParSingleName
-        FROM FabOutHead a
-        LEFT JOIN FabOutDetail b ON a.FabOutNO = b.FabOutNO
-        LEFT JOIN Product d ON a.ProdCode = d.ProdCode
-        LEFT JOIN ProdColor e ON  a.ProdColor = e.SCode
-        LEFT JOIN Custom f on a.PartnerCode = f.ParComID
+        SELECT a.* ,c.ParComNameC,c.ParSingleName as 'SingleName'
+        from FabAccountDetail a LEFT JOIN FabAccountHead b on a.AccNo = b.AccNo
+        LEFT JOIN Custom c on b.AccCust = c.ParComID
         <where>
-            a.FabOutNO = #{params.fabOutNO}
+            a.AccNo = #{params.fabOutNO}
         </where>
-        order by b.PieceNo
+        order by a.ItemNO
     </select>
 
     <!-- 查询成品库存 -->
