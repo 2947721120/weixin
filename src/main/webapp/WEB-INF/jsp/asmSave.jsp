@@ -119,6 +119,7 @@
             $.each(dataList, function (index, value) {
                 appendHtml += "<li data-role='list-divider'>" + value.AsmNO + "<span class='ui-li-count'>库存匹数：" + value.StockPieces + "</span></li>";
                 appendHtml += "<li><a href='#'><h2>客户简称：" + value.ParSingleName + "</h2>";
+                appendHtml += "<p><strong>纱批：" + value.Yarnbrand + "</strong></p>";
                 appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
                 appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
                 appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.AsmDT + "</strong></p>";

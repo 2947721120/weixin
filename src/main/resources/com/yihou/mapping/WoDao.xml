@@ -11,6 +11,7 @@
             a.ProcedureCode,
             c.NAME,
             e.ProdNameC,
+            d.SCode,
             d.SName,
             a.Pieces,
             a.SubQuan

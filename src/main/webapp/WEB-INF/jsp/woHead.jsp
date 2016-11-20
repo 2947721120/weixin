@@ -130,10 +130,11 @@
                 if (value.NAME) {
                     ProcedureCode = value.NAME;
                 }
+                var colorName = value.SCode + "->" + value.SName;
                 appendHtml += "<li data-role='list-divider'>" + value.ManuCrock + "<span class='ui-li-count'>匹数：" + value.Pieces + "</span></li>";
                 appendHtml += "<li><a href='#'><h2>客户简称：" + value.ParSingleName + "</h2>";
                 appendHtml += "<p><strong>布类名称：" + value.ProdNameC + "</strong></p>";
-                appendHtml += "<p><strong>布类颜色：" + value.SName + "</strong></p>";
+                appendHtml += "<p><strong>布类颜色：" + colorName + "</strong></p>";
                 appendHtml += "<p><strong>开单日期：" + value.CreateOrderDT + "</strong></p>";
                 appendHtml += "<p class='ui-li-aside'><strong>完成工序：" + ProcedureCode + "</strong></p>";
                 appendHtml += "<p class='ui-li-count'><strong>数量：" + value.SubQuan + "</strong></p>";

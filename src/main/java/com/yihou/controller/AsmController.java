@@ -48,6 +48,8 @@ public class AsmController {
         sqlPage.setRows(rows);
         sqlPage.setOrder(order);
         List<Map<String, Object>> mapList = asmService.findAsmInHead(params, sqlPage);
+        Map<String, Object> totalMap = asmService.findTotalAsmInHead(params);
+        mapList.add(totalMap);
         JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
         return JSON.toJSONString(mapList, SerializerFeature.WriteDateUseDateFormat);
     }

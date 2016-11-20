@@ -21,7 +21,7 @@
     <div role="main" class="ui-content">
         <div data-role="collapsibleset" data-theme="a" data-content-theme="a" data-collapsed-icon="carat-l" data-expanded-icon="carat-d" data-iconpos="right">
             <div data-role="collapsible" data-collapsed="false">
-                <h3>查询条件</h3>
+                <h3>查询条件<span id="total" style="float: right;">总匹数：0,总重量：0</span></h3>
                 <form method="post">
                     <fieldset>
                         <div class="ui-grid-a">
@@ -116,13 +116,22 @@
         $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
-                appendHtml += "<li data-role='list-divider'>" + value.AsmNO + "<span class='ui-li-count'>入库匹数：" + value.Pieces + "</span></li>";
-                appendHtml += "<li><a href='" + contextPath + "/asmInDetail/" + value.AsmNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
-                appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
-                appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
-                appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.AsmDT + "</strong></p>";
-                appendHtml += "<p class='ui-li-aside'><strong>入库重量：" + value.Weights + "</strong></p>";
-                appendHtml += "</a></li>";
+                if (dataList.length-1 === index) {
+                    if (value) {
+                        $("#total").text("总匹数：" + value.Pieces + ",总重量：" + value.Weights);
+                    } else {
+                        $("#total").text("总匹数：0,总重量：0");
+                    }
+                } else {
+                    appendHtml += "<li data-role='list-divider'>" + value.AsmNO + "<span class='ui-li-count'>入库匹数：" + value.Pieces + "</span></li>";
+                    appendHtml += "<li><a href='" + contextPath + "/asmInDetail/" + value.AsmNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
+                    appendHtml += "<p><strong>纱批：" + value.Yarnbrand + "</strong></p>";
+                    appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
+                    appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
+                    appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.AsmDT + "</strong></p>";
+                    appendHtml += "<p class='ui-li-aside'><strong>入库重量：" + value.Weights + "</strong></p>";
+                    appendHtml += "</a></li>";
+                }
             });
             if (isAppend) {
                 $("#asmInHeadResult").append(appendHtml);

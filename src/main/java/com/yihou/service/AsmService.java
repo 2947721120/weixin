@@ -18,6 +18,10 @@ public class AsmService {
         return asmDao.findAsmInHead(params, sqlPage);
     }
 
+    public Map<String,Object> findTotalAsmInHead(Map<String, Object> params) {
+        return asmDao.findTotalAsmInHead(params);
+    }
+
     public List<Map<String, Object>> findAsmOutHead(Map<String, Object> params, SqlPage sqlPage) {
         return asmDao.findAsmOutHead(params, sqlPage);
     }
