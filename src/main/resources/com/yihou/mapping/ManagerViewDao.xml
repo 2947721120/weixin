@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yihou.dao.ManagerViewDao">
+    <!-- 查询胚布入库总记录 -->
+    <select id="findAsmInTotal" resultType="map">
+      SELECT SUM(a.Weights) as Weights from  AsmInHead a
+      <where>
+          <if test="beginDate != null">
+              AND a.AsmDT <![CDATA[>=]]> #{beginDate}
+          </if>
+          <if test="endDate != null">
+              AND a.AsmDT <![CDATA[<]]> #{endDate}
+          </if>
+      </where>
+    </select>
+    <!-- 查询胚布出库总记录 -->
+    <select id="findAsmOutTotal" resultType="map">
+      SELECT SUM(a.Total) as Weights from AsmOutHead a
+      <where>
+          <if test="beginDate != null">
+              a.AsmDT <![CDATA[>=]]> #{beginDate}
+          </if>
+          <if test="endDate != null">
+              AND a.AsmDT <![CDATA[<]]> #{endDate}
+          </if>
+      </where>
+    </select>
+    <!-- 查询成品入库总记录 -->
+    <select id="findFabInTotal" resultType="map">
+        SELECT SUM(a.Quan) as Weights from FabInHead a
+        <where>
+            <if test="beginDate != null">
+                AND a.FabInDT <![CDATA[>=]]> #{beginDate}
+            </if>
+            <if test="endDate != null">
+                AND a.FabInDT <![CDATA[<]]> #{endDate}
+            </if>
+        </where>
+    </select>
+    <!-- 查询成品出库总记录 -->
+    <select id="findFabOutTotal" resultType="map">
+        SELECT SUM(a.Quan) as Weights from FabAccountDetail a
+        <where>
+            <if test="beginDate != null">
+                AND a.FabOutDT <![CDATA[>=]]> #{beginDate}
+            </if>
+            <if test="endDate != null">
+                AND a.FabOutDT <![CDATA[<]]> #{endDate}
+            </if>
+        </where>
+    </select>
+    <!-- 查询来样总记录 -->
+    <select id="findComeQuanTotal" resultType="map">
+        SELECT  count(*) as Weights FROM ProdColor a LEFT JOIN
+        ProdColorHead b ON a.OrderNo = b.OrderNO
+        <where>
+            <if test="beginDate != null">
+                AND b.PullDate <![CDATA[>=]]> #{beginDate}
+            </if>
+            <if test="endDate != null">
+                AND b.PullDate <![CDATA[<]]> #{endDate}
+            </if>
+        </where>
+    </select>
+    <!-- 查询复样总记录 -->
+    <select id="findReplySamTotal" resultType="map">
+        SELECT  count(*) as Weights FROM ProdColor a LEFT JOIN
+        ProdColorHead b ON a.OrderNo = b.OrderNO
+        <where>
+            <if test="beginDate != null">
+                AND b.PullDate <![CDATA[>=]]> #{beginDate}
+            </if>
+            <if test="endDate != null">
+                AND b.PullDate <![CDATA[<]]> #{endDate}
+            </if>
+        </where>
+    </select>
+    <!-- 查询开卡总数量和总重量 -->
+    <select id="findManuCountAndManuQuan" resultType="map">
+        select  Count(*) as ManuCount,Sum(SubQuan) as ManuQuan from WOHead a
+        <where>
+            <if test="beginDate != null">
+                AND a.Createdt <![CDATA[>=]]> #{beginDate}
+            </if>
+            <if test="endDate != null">
+                AND a.Createdt <![CDATA[<]]> #{endDate}
+            </if>
+        </where>
+    </select>
+    <!--
+        松布产量:0002
+        坯定产量:0006
+        拉毛产量:0022
+        剪毛产量:0024
+        磨毛产量:0026
+        汽蒸产量:0004
+        开幅产量:0003
+        色布开幅:0017
+        色布开幅2:0019
+        染色产量:0011
+        定型产量:0028
+    -->
+    <select id="findScanProcedure" resultType="map">
+        select a.ProcedureCode, Sum(Quan) as Quan from ScanProcedure a
+        <where>
+            <if test="beginDate != null">
+                AND a.ProdDT <![CDATA[>=]]> #{beginDate}
+            </if>
+            <if test="endDate != null">
+                AND a.ProdDT <![CDATA[<]]> #{endDate}
+            </if>
+            AND a.ProcedureCode in('0002','0003','0004','0006','0011','0017','0019','0022','0024','0026','0028')
+        </where>
+        GROUP BY a.ProcedureCode
+    </select>
+
+</mapper>

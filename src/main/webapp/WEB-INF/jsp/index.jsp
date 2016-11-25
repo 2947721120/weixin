@@ -15,7 +15,7 @@
         <ul>
             <li><a href="#index" data-prefetch="true" data-transition="none" data-icon="calendar">仓库类</a></li>
             <li><a href="#product" data-prefetch="true" data-transition="flip" data-icon="grid">生产类</a></li>
-            <li><a href="#finance" data-prefetch="true" data-transition="turn" data-icon="shop">财务类</a></li>
+            <li><a href="#finance" data-prefetch="true" data-transition="turn" data-icon="shop">报表类</a></li>
             <li><a href="#purchase" data-prefetch="true" data-transition="slide" data-icon="navigation">采购类</a></li>
         </ul>
     </div><!-- /navbar -->
@@ -49,7 +49,8 @@
 <div data-role="page" id="finance">
     <div class="ui-content" role="main">
         <ul data-role="listview" data-theme="a" data-dividertheme="b">
-            <li data-role="list-divider">财务类查询</li>
+            <li data-role="list-divider">报表管理</li>
+            <li data-icon="refresh"><a href="${pageContext.request.contextPath}/manager/managerView" target="_top">总经理报表</a></li>
         </ul>
     </div><!-- /content -->
 </div><!-- /page -->

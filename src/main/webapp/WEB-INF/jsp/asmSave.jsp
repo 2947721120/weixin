@@ -52,6 +52,9 @@
         </ul>
     </div><!-- /content -->
 
+    <div data-role="footer" data-position="fixed">
+        <h4><span id="total">总匹数：0,总重量：0</span></h4>
+    </div>
 </div><!-- /page -->
 
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
@@ -107,7 +110,6 @@
             dataType: "JSON",
             data: params,
             success: function (data) {
-                console.log(data);
                 appendHtml(data, isAppend);
             }
         });
@@ -117,14 +119,23 @@
         $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
-                appendHtml += "<li data-role='list-divider'>" + value.AsmNO + "<span class='ui-li-count'>库存匹数：" + value.StockPieces + "</span></li>";
-                appendHtml += "<li><a href='#'><h2>客户简称：" + value.ParSingleName + "</h2>";
-                appendHtml += "<p><strong>纱批：" + value.Yarnbrand + "</strong></p>";
-                appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
-                appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
-                appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.AsmDT + "</strong></p>";
-                appendHtml += "<p class='ui-li-aside'><strong>库存重量：" + value.StockQuan + "</strong></p>";
-                appendHtml += "</a></li>";
+                if (dataList.length-1 === index) {
+                    if (value) {
+                        $("#total").text("总匹数：" + value.Pieces + ",总重量：" + value.Weights);
+                    } else {
+                        $("#total").text("总匹数：0,总重量：0");
+                    }
+                } else {
+                    appendHtml += "<li data-role='list-divider'>" + value.AsmNO + "<span class='ui-li-count'>库存匹数：" + value.StockPieces + "</span></li>";
+                    appendHtml += "<li><a href='#'><h2>客户简称：" + value.ParSingleName + "</h2>";
+                    appendHtml += "<p><strong>布类名称：" + value.ProdNameC + "</strong></p>";
+                    appendHtml += "<p><strong>纱批：" + value.Yarnbrand + "</strong></p>";
+                    appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
+                    appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
+                    appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.AsmDT + "</strong></p>";
+                    appendHtml += "<p class='ui-li-aside'><strong>库存重量：" + value.StockQuan + "</strong></p>";
+                    appendHtml += "</a></li>";
+                }
             });
             if (isAppend) {
                 $("#asmInHeadResult").append(appendHtml);

@@ -57,6 +57,10 @@
         </ul>
     </div><!-- /content -->
 
+    <div data-role="footer" data-position="fixed">
+        <h4><span id="total">总匹数：0,总重量：0</span></h4>
+    </div>
+
 </div><!-- /page -->
 
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
@@ -125,17 +129,25 @@
         $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
-                var colorName = value.ProdColor + "->" + value.SName;
-                appendHtml += "<li data-role='list-divider'>" + value.FabInNO + "<span class='ui-li-count'>入库匹数：" + value.Pieces + "</span></li>";
-                appendHtml += "<li><a href='" + contextPath + "/fabInDetail/" + value.FabInNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
-                appendHtml += "<p><strong>客来单号：" + value.CustOrderNO + "</strong></p>";
-                appendHtml += "<p><strong>布类名称：" + value.ProdNameC + "</strong></p>";
-                appendHtml += "<p><strong>颜色：" + colorName + "</strong></p>";
-                appendHtml += "<p><strong>门幅：" + value.WideSize + "</strong></p>";
-                appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
-                appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.FabInDT + "</strong></p>";
-                appendHtml += "<p class='ui-li-aside'><strong>入库重量：" + value.Quan + "</strong></p>";
-                appendHtml += "</a></li>";
+                if (dataList.length-1 === index) {
+                    if (value) {
+                        $("#total").text("总匹数：" + value.Pieces + ",总重量：" + value.Weights);
+                    } else {
+                        $("#total").text("总匹数：0,总重量：0");
+                    }
+                } else {
+                    var colorName = value.ProdColor + "->" + value.SName;
+                    appendHtml += "<li data-role='list-divider'>" + value.FabInNO + "<span class='ui-li-count'>入库匹数：" + value.Pieces + "</span></li>";
+                    appendHtml += "<li><a href='" + contextPath + "/fabInDetail/" + value.FabInNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
+                    appendHtml += "<p><strong>客来单号：" + value.CustOrderNO + "</strong></p>";
+                    appendHtml += "<p><strong>布类名称：" + value.ProdNameC + "</strong></p>";
+                    appendHtml += "<p><strong>颜色：" + colorName + "</strong></p>";
+                    appendHtml += "<p><strong>门幅：" + value.WideSize + "</strong></p>";
+                    appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
+                    appendHtml += "<p class='ui-li-count'><strong>入库时间：" + value.FabInDT + "</strong></p>";
+                    appendHtml += "<p class='ui-li-aside'><strong>入库重量：" + value.Quan + "</strong></p>";
+                    appendHtml += "</a></li>";
+                }
             });
             if (isAppend) {
                 $("#asmInHeadResult").append(appendHtml);

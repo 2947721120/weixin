@@ -3,8 +3,9 @@
 <mapper namespace="com.yihou.dao.AsmDao">
     <!-- 查询胚布入库主表信息 -->
     <select id="findAsmInHead" resultType="map">
-        select a.*,b.ParComNameC,b.ParSingleName
+        select a.*,b.ParComNameC,b.ParSingleName,c.ProdNameC
         from AsmInHead a left join Custom b on a.Customcode = b.ParComID
+        LEFT JOIN Product c ON a.ProdCode = c.ProdCode
         <where>
             <if test="params.customerName != null">
                 b.ParSingleName = #{params.customerName}
@@ -42,7 +43,20 @@
 
     <!-- 查询胚布出库库主表信息 -->
     <select id="findAsmOutHead" resultType="map">
-        select a.* from AsmOutHead a
+        select a.*,b.ProdNameC from AsmOutHead a
+        LEFT JOIN Product b ON a.ProdCode = b.ProdCode
+        <where>
+            <if test="params.beginDate != null">
+                a.AsmDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.AsmDT <![CDATA[<]]> #{params.endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="findTotalAsmOutHead" resultType="map">
+        SELECT SUM(a.Total) Weights ,SUM(a.Pieces) Pieces from AsmOutHead a
         <where>
             <if test="params.beginDate != null">
                 a.AsmDT <![CDATA[>=]]> #{params.beginDate}
@@ -93,7 +107,8 @@
             b.*,
             a.StockPieces,
             a.StockQuan,
-            c.ParSingleName
+            c.ParSingleName,
+            d.ProdNameC
         FROM
         (
             SELECT
@@ -106,6 +121,41 @@
               StockQuan > 0
             GROUP BY
               AsmNo
+        ) a
+        LEFT JOIN AsmInHead b ON a.AsmNo = b.AsmNO
+        LEFT JOIN Custom c on b.Customcode = c.ParComID
+        LEFT JOIN Product d on b.ProdCode = d.ProdCode
+        <where>
+            <if test="params.beginDate != null">
+                b.AsmDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND b.AsmDT <![CDATA[<]]> #{params.endDate}
+            </if>
+            <if test="params.ParSingleName != null">
+                AND c.ParSingleName = #{params.ParSingleName}
+            </if>
+            <if test="params.ParComID != null">
+                AND c.ParComID = #{params.ParComID}
+            </if>
+        </where>
+    </select>
+
+    <select id="findTotalAsmSave" resultType="map">
+        SELECT
+        SUM(b.Pieces) Pieces ,SUM(b.Weights) Weights
+        FROM
+        (
+        SELECT
+        AsmNo,
+        SUM(StockPieces) StockPieces,
+        ROUND(SUM(StockQuan), 2) StockQuan
+        FROM
+        AsmSave
+        WHERE
+        StockQuan > 0
+        GROUP BY
+        AsmNo
         ) a
         LEFT JOIN AsmInHead b ON a.AsmNo = b.AsmNO
         LEFT JOIN Custom c on b.Customcode = c.ParComID

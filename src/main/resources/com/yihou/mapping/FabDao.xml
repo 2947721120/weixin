@@ -28,6 +28,31 @@
         </where>
     </select>
 
+    <select id="findTotalFabInHead" resultType="map">
+        select SUM(a.Pieces) Pieces , SUM(a.Quan) Weights
+        from FabInHead a left join Custom b on a.PartnerCode = b.ParComID
+        LEFT JOIN Product c ON a.ProdCode = c.ProdCode
+        LEFT JOIN ProdColor d ON a.ProdColor = d.SCode
+        LEFT JOIN WOHead e ON a.ManuCrock = e.ManuCrock
+        <where>
+            <if test="params.customerName != null">
+                b.ParSingleName = #{params.customerName}
+            </if>
+            <if test="params.beginDate != null">
+                AND a.FabInDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND a.FabInDT <![CDATA[<]]> #{params.endDate}
+            </if>
+            <if test="params.ParComID != null">
+                AND b.ParComID = #{params.ParComID}
+            </if>
+            <if test="params.custOrderNO != null">
+                AND e.CustOrderNO LIKE '%${params.custOrderNO}%'
+            </if>
+        </where>
+    </select>
+
     <!-- 查询成品入库明细信息 -->
     <select id="findFabInDetail" resultType="map">
         SELECT
@@ -78,6 +103,34 @@
         </where>
     </select>
 
+    <select id="findTotalFabOutHead" resultType="map">
+        SELECT   SUM(e.Pieces) Pieces,SUM(e.Quan) Weights
+        FROM      WOHead a LEFT OUTER JOIN
+        Custom b ON a.CustCode = b.ParComID LEFT OUTER JOIN
+        ProdColor c ON a.ColorCode = c.SCode LEFT OUTER JOIN
+        Product d ON a.ProdCode = d.ProdCode LEFT OUTER JOIN
+        FabAccountDetail e ON a.ManuCrock = e.FabOutNO LEFT OUTER JOIN
+        FabAccountHead f ON e.AccNo = f.AccNo
+        <where>
+            (e.AccNo IS NOT NULL)
+            <if test="params.customerName != null">
+                AND b.ParSingleName = #{params.customerName}
+            </if>
+            <if test="params.beginDate != null">
+                AND f.AccDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND f.AccDT <![CDATA[<]]> #{params.endDate}
+            </if>
+            <if test="params.ParComID != null">
+                AND b.ParComID = #{params.ParComID}
+            </if>
+            <if test="params.custOrderNO != null">
+                AND a.CustOrderNO LIKE '%${params.custOrderNO}%'
+            </if>
+        </where>
+    </select>
+
     <!-- 查询成品出库明细信息 -->
     <select id="findFabOutDetail" resultType="map">
         SELECT a.* ,c.ParComNameC,c.ParSingleName as 'SingleName'
@@ -98,6 +151,45 @@
         d.ProdNameC,
         e.SName,
         f.CustOrderNO
+        FROM
+        (
+        SELECT
+        FabinNo,
+        ROUND(SUM(quan), 2) StockQuan
+        FROM
+        FabSave
+        WHERE
+        quan > 0
+        GROUP BY
+        FabinNo
+        ) a
+        LEFT JOIN FabInHead b ON a.FabinNo = b.FabinNo
+        LEFT JOIN Custom c on b.PartnerCode = c.ParComID
+        LEFT JOIN Product d ON b.ProdCode = d.ProdCode
+        LEFT JOIN ProdColor e ON b.ProdColor = e.SCode
+        LEFT JOIN WOHead f ON b.ManuCrock = f.ManuCrock
+        <where>
+            <if test="params.beginDate != null">
+                b.FabInDT <![CDATA[>=]]> #{params.beginDate}
+            </if>
+            <if test="params.endDate != null">
+                AND b.FabInDT <![CDATA[<]]> #{params.endDate}
+            </if>
+            <if test="params.ParSingleName != null">
+                AND c.ParSingleName = #{params.ParSingleName}
+            </if>
+            <if test="params.ParComID != null">
+                AND c.ParComID = #{params.ParComID}
+            </if>
+            <if test="params.custOrderNO != null">
+                AND f.CustOrderNO LIKE '%${params.custOrderNO}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="findTotalFabSave" resultType="map">
+        SELECT
+        SUM(b.Pieces) Pieces,SUM(b.Quan) Weights
         FROM
         (
         SELECT

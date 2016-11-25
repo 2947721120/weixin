@@ -21,7 +21,7 @@
     <div role="main" class="ui-content">
         <div data-role="collapsibleset" data-theme="a" data-content-theme="a" data-collapsed-icon="carat-l" data-expanded-icon="carat-d" data-iconpos="right">
             <div data-role="collapsible" data-collapsed="false">
-                <h3>查询条件<span id="total" style="float: right;">总匹数：0,总重量：0</span></h3>
+                <h3>查询条件</h3>
                 <form method="post">
                     <fieldset>
                         <div class="ui-grid-a">
@@ -52,6 +52,9 @@
         </ul>
     </div><!-- /content -->
 
+    <div data-role="footer" data-position="fixed">
+        <h4><span id="total">总匹数：0,总重量：0</span></h4>
+    </div>
 </div><!-- /page -->
 
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
@@ -125,6 +128,7 @@
                 } else {
                     appendHtml += "<li data-role='list-divider'>" + value.AsmNO + "<span class='ui-li-count'>入库匹数：" + value.Pieces + "</span></li>";
                     appendHtml += "<li><a href='" + contextPath + "/asmInDetail/" + value.AsmNO + "'><h2>客户简称：" + value.ParSingleName + "</h2>";
+                    appendHtml += "<p><strong>布类名称：" + value.ProdNameC + "</strong></p>";
                     appendHtml += "<p><strong>纱批：" + value.Yarnbrand + "</strong></p>";
                     appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
                     appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";

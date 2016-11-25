@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>胚布出库查询</title>
+    <title>总经理报表</title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/static/img/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/css/themes/default/jquery.mobile-1.4.5.min.css">
 </head>
@@ -14,7 +14,7 @@
 <div data-role="page" id="index">
 
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>胚布出库查询</h1>
+        <h1>报表查询</h1>
         <a href="${pageContext.request.contextPath}/" target="_top" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
     </div><!-- /header -->
 
@@ -44,15 +44,10 @@
                 </form>
             </div>
         </div>
-        <ul data-role="listview" data-inset="true" id="asmOutHeadResult">
+        <ul data-role="listview" data-inset="true" id="asmInHeadResult">
 
         </ul>
     </div><!-- /content -->
-
-    <div data-role="footer" data-position="fixed">
-        <h4><span id="total">总匹数：0,总重量：0</span></h4>
-    </div>
-
 </div><!-- /page -->
 
 <script src="${pageContext.request.contextPath}/static/plugins/jquery.mobile-1.4.5/js/jquery.js"></script>
@@ -60,9 +55,6 @@
 <script src="${pageContext.request.contextPath}/static/plugins/js/jquery.ext.js"></script>
 <script>
     var contextPath = "${pageContext.request.contextPath}";
-    var defaultPage = 1;
-    var defaultRows = 10;
-    var order = "a.AsmDT desc";
     $(function () {
         var now = new Date();
         now.setDate(now.getDate() -1);
@@ -77,21 +69,10 @@
         buttonData();
     }
     function buttonData() {
-        defaultPage = 1;
-        defaultRows = 10;
-        findAsmInOutData(defaultPage, defaultRows, false);
+        findAsmInHeadData(false);
     }
-    function clickMore() {
-        defaultPage += 1;
-        defaultRows += 10;
-        findAsmInOutData(defaultPage, defaultRows, true);
-    }
-    function findAsmInOutData(page, rows, isAppend) {
-        var params = {
-            "page": page,
-            "rows": rows,
-            "order": order
-        };
+    function findAsmInHeadData(page, rows, isAppend) {
+        var params = {};
         if ($("#beginDate").val() != '') {
             params.beginDate = $("#beginDate").val();
         }
@@ -100,52 +81,28 @@
         }
         $.ajax({
             type: "post",
-            url: "${pageContext.request.contextPath}/asm/findAsmOutHead",
+            url: "${pageContext.request.contextPath}/manager/view",
             dataType: "JSON",
             data: params,
             success: function (data) {
-                //console.log(data);
                 appendHtml(data, isAppend);
             }
         });
     }
     function appendHtml(dataList, isAppend) {
         var appendHtml = "";
-        $("#clickMore").remove();
         if (dataList && dataList.length > 0) {
             $.each(dataList, function (index, value) {
-                if (dataList.length-1 === index) {
-                    if (value) {
-                        $("#total").text("总匹数：" + value.Pieces + ",总重量：" + value.Weights);
-                    } else {
-                        $("#total").text("总匹数：0,总重量：0");
-                    }
-                } else {
-                    appendHtml += "<li data-role='list-divider'>" + value.AsmOutNO + "<span class='ui-li-count'>出库匹数：" + value.Pieces + "</span></li>";
-                    appendHtml += "<li><a href='" + contextPath + "/asmOutDetail/" + value.AsmOutNO + "'><h2>出库部门：" + value.DeptCode + "</h2>";
-                    appendHtml += "<p><strong>布类名称：" + value.ProdNameC + "</strong></p>";
-                    appendHtml += "<p><strong>纱批：" + value.Yarnbrand + "</strong></p>";
-                    appendHtml += "<p><strong>门幅：" + value.Widesize + "</strong></p>";
-                    appendHtml += "<p><strong>克重：" + value.FndHeight + "</strong></p>";
-                    appendHtml += "<p class='ui-li-count'><strong>出库时间：" + value.AsmDT + "</strong></p>";
-                    appendHtml += "<p class='ui-li-aside'><strong>出库重量：" + value.Total + "</strong></p>";
-                    appendHtml += "</a></li>";
-                }
+                //appendHtml += "<li data-role='list-divider'></li>";
+                appendHtml += "<li>";
+                appendHtml += "<p><strong>" + value.name + "：" + value.total + "</strong></p>";
+                appendHtml += "</li>";
             });
-            if (isAppend) {
-                $("#asmOutHeadResult").append(appendHtml);
-            } else {
-                $("#asmOutHeadResult").html(appendHtml);
-            }
-            $("#asmOutHeadResult").append("<li id='clickMore'><a href='javascript:clickMore();'><h2><strong>点击加载更多数据</strong></h2></a></li>");
+            $("#asmInHeadResult").html(appendHtml);
         } else {
-            if (isAppend) {
-                $("#asmOutHeadResult").append("<li data-role='list-divider'>数据已全部加载完成！</li>");
-            } else {
-                $("#asmOutHeadResult").html("<li data-role='list-divider'>当前条件没有更多数据！</li>");
-            }
+            $("#asmInHeadResult").html("<li data-role='list-divider'>当前条件没有更多数据！</li>");
         }
-        $("#asmOutHeadResult").listview("refresh");
+        $("#asmInHeadResult").listview("refresh");
     }
 </script>
 </body>

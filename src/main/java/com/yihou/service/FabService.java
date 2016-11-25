@@ -18,8 +18,16 @@ public class FabService {
         return fabDao.findFabInHead(params, sqlPage);
     }
 
+    public Map<String, Object> findTotalFabInHead(Map<String, Object> params) {
+        return fabDao.findTotalFabInHead(params);
+    }
+
     public List<Map<String, Object>> findFabOutHead(Map<String, Object> params, SqlPage sqlPage) {
-        return fabDao.findFabOutHead(params,sqlPage);
+        return fabDao.findFabOutHead(params, sqlPage);
+    }
+
+    public Map<String, Object> findTotalFabOutHead(Map<String, Object> params) {
+        return fabDao.findTotalFabOutHead(params);
     }
 
     public List<Map<String, Object>> findFabInDetail(Map<String, Object> params) {
@@ -34,4 +42,7 @@ public class FabService {
         return fabDao.findFabSave(params, sqlPage);
     }
 
+    public Map<String, Object> findTotalFabSave(Map<String, Object> params) {
+        return fabDao.findTotalFabSave(params);
+    }
 }

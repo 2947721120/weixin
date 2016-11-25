@@ -49,6 +49,8 @@ public class FabController {
         sqlPage.setRows(rows);
         sqlPage.setOrder(order);
         List<Map<String, Object>> mapList = fabService.findFabInHead(params, sqlPage);
+        Map<String, Object> totalMap = fabService.findTotalFabInHead(params);
+        mapList.add(totalMap);
         JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
         return JSON.toJSONString(mapList, SerializerFeature.WriteDateUseDateFormat);
     }
@@ -70,6 +72,8 @@ public class FabController {
         sqlPage.setRows(rows);
         sqlPage.setOrder(order);
         List<Map<String, Object>> mapList = fabService.findFabOutHead(params, sqlPage);
+        Map<String, Object> totalMap = fabService.findTotalFabOutHead(params);
+        mapList.add(totalMap);
         JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
         return JSON.toJSONString(mapList, SerializerFeature.WriteDateUseDateFormat);
     }
@@ -91,6 +95,8 @@ public class FabController {
         sqlPage.setRows(rows);
         sqlPage.setOrder(order);
         List<Map<String, Object>> mapList = fabService.findFabSave(params, sqlPage);
+        Map<String, Object> totalMap = fabService.findTotalFabSave(params);
+        mapList.add(totalMap);
         JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
         return JSON.toJSONString(mapList, SerializerFeature.WriteDateUseDateFormat);
     }

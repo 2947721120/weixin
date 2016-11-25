@@ -14,10 +14,14 @@ public interface AsmDao {
 
     List<Map<String, Object>> findAsmOutHead(@Param("params") Map<String, Object> params, @Param("sqlPage") SqlPage sqlPage);
 
+    Map<String,Object> findTotalAsmOutHead(@Param("params") Map<String, Object> params);
+
     List<Map<String, Object>> findAsmInDetail(@Param("params") Map<String, Object> params);
 
     List<Map<String, Object>> findAsmOutDetail(@Param("params") Map<String, Object> params);
 
     List<Map<String, Object>> findAsmSave(@Param("params") Map<String, Object> params, @Param("sqlPage") SqlPage sqlPage);
+
+    Map<String,Object> findTotalAsmSave(@Param("params") Map<String, Object> params);
 
 }

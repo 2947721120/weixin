@@ -26,6 +26,10 @@ public class AsmService {
         return asmDao.findAsmOutHead(params, sqlPage);
     }
 
+    public Map<String,Object> findTotalAsmOutHead(Map<String, Object> params) {
+        return asmDao.findTotalAsmOutHead(params);
+    }
+
     public List<Map<String, Object>> findAsmInDetail(Map<String, Object> params) {
         return asmDao.findAsmInDetail(params);
     }
@@ -36,6 +40,10 @@ public class AsmService {
 
     public List<Map<String, Object>> findAsmSave(Map<String, Object> params, SqlPage sqlPage) {
         return asmDao.findAsmSave(params, sqlPage);
+    }
+
+    public Map<String,Object> findTotalAsmSave(Map<String, Object> params) {
+        return asmDao.findTotalAsmSave(params);
     }
 
 }
