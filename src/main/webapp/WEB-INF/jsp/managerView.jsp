@@ -15,7 +15,7 @@
 
     <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>报表查询</h1>
-        <a href="${pageContext.request.contextPath}/" target="_top" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
+        <a href="${pageContext.request.contextPath}/#finance" target="_top" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-alt-icon ui-btn-left">菜单</a>
     </div><!-- /header -->
 
     <div role="main" class="ui-content">
