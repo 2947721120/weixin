@@ -44,15 +44,19 @@ public class ManagerViewController {
     @ResponseBody
     public String view(Date beginDate, Date endDate) {
         Map<String, Object> params = new HashMap<String, Object>();
-        Calendar beginCalendar = Calendar.getInstance();
-        beginCalendar.setTime(beginDate);
-        beginCalendar.add(Calendar.HOUR_OF_DAY, 8);
-        params.put("beginDate", beginCalendar.getTime());
-        endDate = DateUtil.addDay(endDate, 1);
-        Calendar endCalendar = Calendar.getInstance();
-        endCalendar.setTime(endDate);
-        endCalendar.add(Calendar.HOUR_OF_DAY, 8);
-        params.put("endDate", endCalendar.getTime());
+        if (beginDate != null) {
+            Calendar beginCalendar = Calendar.getInstance();
+            beginCalendar.setTime(beginDate);
+            beginCalendar.add(Calendar.HOUR_OF_DAY, 8);
+            params.put("beginDate", beginCalendar.getTime());
+        }
+        if (endDate != null) {
+            endDate = DateUtil.addDay(endDate, 1);
+            Calendar endCalendar = Calendar.getInstance();
+            endCalendar.setTime(endDate);
+            endCalendar.add(Calendar.HOUR_OF_DAY, 8);
+            params.put("endDate", endCalendar.getTime());
+        }
         List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
         Map<String, Object> asmInTotal = managerViewDao.findAsmInTotal(params);
         Map<String, Object> asmInTotalTemp = new HashMap<String, Object>();
